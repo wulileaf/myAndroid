@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">MyAndroid</string>
+    <!--登录页面-->
+    <string name="account">请输入账号</string>
+    <string name="password">请输入密码</string>
+    <string name="sure_password">请确认密码</string>
+    <string name="check_password">记住密码</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="check_login">自动登录</string>
+    <string name="login">登录</string>
+    <string name="loading">正在加载数据</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="phone_name">请输入手机号码</string>
+    <string name="verification_code">请输入验证码</string>
+    <!--获取验证码-->
+    <string name="get_verification_code">获取验证码</string>
+    <string name="register">注册</string>
+    <string name="immediately_register">立即注册</string>
+
+
+</resources>

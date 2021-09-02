@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:background="@drawable/item_bottom_solid_line">
+
+    <TextView
+        android:id="@+id/storename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="门店名称"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:id="@+id/kmvalue"
+        android:layout_marginRight="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/sp_10"
+        android:text="200"
+        android:layout_toLeftOf="@+id/km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/km"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/sp_10"
+        android:text="km"
+        android:layout_toLeftOf="@+id/lcation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginRight="@dimen/dp_20"
+        android:id="@+id/lcation"
+        android:src="@mipmap/location"
+        android:layout_alignParentRight="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storecode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storename"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="网点编码：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storecodevalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storename"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_toRightOf="@+id/storecode" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/isnewstore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storename"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_toRightOf="@+id/storecodevalue"
+        android:text="网点编码：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/isnewstorevalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storename"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_toRightOf="@+id/isnewstore" />
+
+
+
+
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storecode"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="联系人名称：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/contactvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storecode"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/contact" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/contacttel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storecode"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/contactvalue"
+        android:text="联系人电话：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/contacttelvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storecode"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/contacttel" />
+
+
+
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storelevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="网点级别：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storelevelvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/storelevel" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storetype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/storelevelvalue"
+        android:text="网点类型：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storetypevalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/storetype" />
+
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storeaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storelevel"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="网点地址：" />
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/storeaddressvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storelevel"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@+id/storeaddress" />
+
+</RelativeLayout>

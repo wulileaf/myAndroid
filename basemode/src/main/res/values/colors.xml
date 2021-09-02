@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="up">#3399cc</color>
+    <color name="btn_login">#4690EE</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="head">#3c3c44</color>
+    <color name="white">#fff</color>
+
+    <color name="titlebg_gray">#DADADA</color>
+    <color name="black">#000000</color>
+
+    <color name="orange_main">#ec6f1a</color>
+    <color name="orange_light">#ffd39b</color>
+    <color name="orange_deep">#ff6f3a</color>
+    <color name="orange_most">#C76114</color>
+    <color name="orange_litter">#80aa6136</color>
+    <color name="tv_gray_deep">#818181</color>
+    <color name="top_bar_normal_bg">#ec6f1a</color>
+    <color name="transparent_half">#a0000000</color>
+
+    <color name="camera_progress_three">#24ff00</color>
+    <color name="color_4e3d31">#4e3d31</color>
+    <color name="grey8">#888888</color>
+    <color name="bottom_gray">#ececec</color>
+    <color name="transparent_black_85">#DA000000</color>
+
+    <color name="gaodecolor">#DCE0EB</color>
+    <color name="color_dark_grey">#808080</color>
+    <color name="progass">#f1f1f1</color>
+</resources>

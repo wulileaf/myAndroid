@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="titlecontentsize">10sp</dimen>  <!--标题字体大小  -->
+    <dimen name="LayoutPitch">15dp</dimen>
+    <dimen name="get_verification_code">12sp</dimen>
+</resources>

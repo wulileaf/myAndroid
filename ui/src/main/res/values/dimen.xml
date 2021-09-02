@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="titlecontentsize">20sp</dimen>  <!--标题字体大小  -->
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="item_height_normal">50dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_normal">12dp</dimen>
+    <dimen name="text_size_normal">15sp</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="image_height_litter">20dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_huge">64dp</dimen>
+
+</resources>

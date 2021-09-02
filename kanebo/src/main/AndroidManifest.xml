@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.zackratos.kanebo">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+<!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!--高德地图-地图包、搜索包需要的基础权限-->
+    <!--允许程序打开网络套接字-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许程序设置内置sd卡的写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许程序获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许程序访问WiFi网络信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 精确定位权限，允许一个程序访问精良位置(如GPS) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_policy_details"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        tools:replace="android:name">
+        <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.Main" />
+        <activity android:name=".ui.PersonalCenter" />
+        <activity android:name=".Login_Forget_Password" />
+        <activity android:name=".ui.DayVisit" />
+        <activity android:name=".ui.DB" />
+        <activity android:name=".ui.LoadDwon" />
+        <activity android:name=".ui.PhotoGraph"/>
+        <activity android:name=".ui.Register"/>
+        <activity android:name=".ui.GaoDeMap"/>
+        <activity android:name=".ui.DayVisitDetails"/>
+
+        <!--        参数依次解释-->
+        <!--        android.support.v4.content.FileProvider  androidx替换为androidx.core.content.FileProvider-->
+        <!--        一般由你的包名+fileprovider构成，保证唯一性-->
+        <!--        禁止跟其他应用交互-->
+        <!--        授予文件访问权限-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="org.zackratos.kanebo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/photo_path" />
+        </provider>
+
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data android:name="com.amap.api.v2.apikey"
+            android:value="2d43662fdd704e1eb86175f31876bcb0">
+
+        </meta-data>
+
+    </application>
+
+<!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
+    <!--    只有拍照权限-->
+    <!--    4.0-8.0都不需要相机权限就可以拍照，然而9.0不行(华为p20真机)-->
+<!--    <uses-feature android:name="android.hardware.camera" />-->
+
+
+
+
+</manifest>

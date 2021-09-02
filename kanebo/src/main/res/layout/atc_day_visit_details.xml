@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main">
+
+    <include layout="@layout/titlber" />
+
+    <RelativeLayout
+        android:background="@drawable/item_bottom_solid_line"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/xxName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="办事处" />
+
+        <TextView
+            android:id="@+id/xxValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_toRightOf="@+id/xxName"
+            android:gravity="right"
+            android:text="这个是参数" />
+
+    </RelativeLayout>
+
+<!--  spinnerMode:  "dialog"|"dropdown"|"prompt"-->
+    <Spinner
+        android:id="@+id/spCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择性别" />
+
+    <RadioGroup
+        android:id="@+id/rg_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rb_Male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="男" />
+
+        <RadioButton
+            android:id="@+id/rb_FeMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="女" />
+    </RadioGroup>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="请选择"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+        android:id="@+id/check_box_bj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bei Jing"/>
+
+        <CheckBox
+        android:id="@+id/check_box_sh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shang Hai"/>
+        <CheckBox
+        android:id="@+id/check_box_gz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guang Zhou"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

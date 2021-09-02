@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlber" />
+
+    <Switch
+        android:id="@+id/switch_chose"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:switchMinWidth="20dp"
+        android:textOff="off"
+        android:textOn="on"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/item_2019"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/item_bottom_solid_line">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/toright" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="你好2019"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

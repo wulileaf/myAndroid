@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "28.0.3"
+    defaultConfig {
+        applicationId "org.zackratos.myandroid"
+        minSdkVersion 28
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    greendao {
+        schemaVersion 1//数据库版本号
+        daoPackage 'org.zackratos.myandroid.gen'//设置DaoMaster、DaoSession、Dao包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+        //targetGenDirTest：设置生成单元测试目录
+        //generateTests：设置自动生成单元测试用例
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:26.+'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    implementation project(':basemode')// 引用basemode
+
+//    implementation 'com.jakewharton:butterknife:8.8.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.2.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.2'
+
+    implementation 'com.android.support:design:23.3.0'
+
+    implementation 'com.dou361.dialogui:jjdxm-dialogui:1.0.3'// 各种简单样式的弹出框框架(提示：不可用其中的日期选择功能)
+
+    implementation 'com.github.limxing:Android-PromptDialog:1.1.3'// 提示窗口，正在加载中，主页广告，IOS 底部弹出选择，
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+
+    implementation 'org.greenrobot:greendao:3.2.2'// GreenDao数据库
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'// recyclerview专用适配器
+
+    implementation 'com.android.support:recyclerview-v7:25.3.1'// RecyclerView
+    implementation 'org.byteam.superadapter:superadapter:3.6.7'// SuperAdapter
+}
