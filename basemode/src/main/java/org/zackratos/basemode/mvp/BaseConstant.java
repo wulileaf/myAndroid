@@ -8,6 +8,6 @@ package org.zackratos.basemode.mvp;
  */
 public class BaseConstant {
 
-    public static String PROJECTNAME = "opple";// 用于数据缓存的时候标记项目名称
+    static String PROJECTNAME = "opple";// 用于数据缓存的时候标记项目名称
 
 }

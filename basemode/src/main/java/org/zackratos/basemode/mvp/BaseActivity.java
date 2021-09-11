@@ -1,19 +1,14 @@
 package org.zackratos.basemode.mvp;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +23,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -63,13 +57,13 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         state = savedInstanceState;
         setContentView(initView());
 
-//        if (isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+//        if (isDebug()) {           // 这两行必须写在init之前,否则这些配置在init过程中将无效
 //            ARouter.openLog();     // 打印日志
-//            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+//            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行,必须开启调试模式线上版本需要关闭,否则有安全风险)
 //        }
-//        ARouter.init(getApplication()); // 尽可能早，推荐在Application中初始化
+//        ARouter.init(getApplication()); // 尽可能早,推荐在Application中初始化
 
-        BaseActivityCollector.getInstance().addActivity(this);// 初始化Activity管理类，方便销毁
+        BaseActivityCollector.getInstance().addActivity(this);// 初始化Activity管理类,方便销毁
         mUnbinder = ButterKnife.bind(this);// 绑定Activity
         mPresenter = getPresenter();
         initData();
@@ -85,7 +79,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     // 初始化数据
     protected abstract void initData();
 
-    // savedInstanceState
+    // 是否除去手机状态栏
     public Bundle savedInstanceState() {
         return state;
     }
@@ -109,30 +103,18 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 吐司提示
-     * 显示位置在页面的中间位置
-     */
+    // 吐司提示显示位置在页面的中间位置
     public void showMidToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    /**
-     * 吐司提示
-     * 显示图片加文字的提示方式
-     * 原生的
-     *
-     * @param content:要显示的文字
-     * @param color：要显示文字的颜色
-     * @param mipmap：图片      mipmap图片大小(>70*70)
-     * @param dt:            图示显示的时间长短
-     */
+    // 吐司提示显示图片加文字的提示方式    mipmap图片大小(>70*70) 后面的参数是标识吐司提示在页面的位置
     public void showPhotoToast(String content, int color, int mipmap, int dt) {
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(dt);
-        toast.setGravity(Gravity.CENTER, 0, 0);// 后面的参数是标识吐司提示在页面的位置
+        toast.setGravity(Gravity.CENTER, 0, 0);
 
 //==========================================1==============================================================
 //        LinearLayout toastView = (LinearLayout) toast.getView();
@@ -158,9 +140,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 //==========================================2==============================================================
     }
 
-    /**
-     * 弹出式提示框
-     */
+    // 弹出式提示框
     public void showDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
@@ -168,43 +148,34 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                 .setPositiveButton("确定", null).show();
     }
 
-    /**
-     * onDestroy方法执行的操作
-     * 解除注解
-     */
+    // onDestroy方法执行的操作-解除注解 关闭这个Activity管理类 释放资源 解除注册EventBus
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BaseActivityCollector.removeActivity(this);// 关闭这个Activity管理类
+        BaseActivityCollector.removeActivity(this);
         if (mPresenter != null) {
-            mPresenter.onDestroy();//释放资源
+            mPresenter.onDestroy();
         }
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
         if (useEventBus) {
-            EventBus.getDefault().unregister(this);//解除注册EventBus
+            EventBus.getDefault().unregister(this);
         }
         this.mUnbinder = null;
-//        this.mUnbinder = null;
     }
 
-    /**
-     * 是否使用EventBus,默认为使用(false)，
-     */
+    // 是否使用EventBus，默认为使用(false)
     protected void useEventBus(boolean useEventBus) {
         this.useEventBus = useEventBus;
     }
 
-    /**
-     * 公共的头部
-     */
+    // 公共的头部
     public void initTitleBar() {
         tv_titleContent = (TextView) findViewById(R.id.title_content);
         tv_titleright = (TextView) findViewById(R.id.title_right);
         tv_titleback = (ImageView) findViewById(R.id.title_back);
         tv_titleback.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 finish();
@@ -222,9 +193,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
     }
 
-    /**
-     * 布局切换  ok
-     */
+    // 布局切换
     protected void replace(@IdRes int fragmentId, Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(fragmentId, fragment)
@@ -238,9 +207,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                 .commit();
     }
 
-    /**
-     * 跳转
-     */
+    // 跳转
     protected abstract Intent mainIntent(Context context);
 
     // 监听网络变化
@@ -256,15 +223,13 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                     switch (networkInfo.getType()) {
                         case TYPE_MOBILE:
                             Toast.makeText(context, "正在使用移动网络", Toast.LENGTH_SHORT).show();
-//                            netType = networkInfo.getType();
-                            // 在网络由网络到有网络的时候
+                            // 在由网络到有网络的时候
                             // 发送广播
                             break;
                         case TYPE_WIFI:
                             Toast.makeText(context, "正在使用wifi网络", Toast.LENGTH_SHORT).show();
                             // 在网络由网络到有网络的时候
                             // 发送广播
-//                            netType = networkInfo.getType();
                             break;
                         default:
                             break;
@@ -298,7 +263,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     // 获取定位信息
     public LocationManager getLocation() {
-        //1.获取系统LocationManager服务
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);//低精度，中精度高精度获取不到location。
@@ -309,36 +273,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
         String locationProvider = locationManager.getBestProvider(criteria, true);
 
-
-//        upLocationData(locationManager);
-
         return locationManager;
-
-        //2.获取GPS最近的定位信息
-//        Location location = locationManager.getLastKnownLocation(locationProvider);
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                // 当GPS定位信息发生改变时，更新位置
-//                upLocationData(location);
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//            }
-//
-//            @Override
-//            public void onProviderEnabled(String provider) {
-//                // LocationProvider可用时，更新位置
-//
-//            }
-//
-//            @Override
-//            public void onProviderDisabled(String provider) {
-//
-//            }
-//        });
     }
 
     // 获取定位接口

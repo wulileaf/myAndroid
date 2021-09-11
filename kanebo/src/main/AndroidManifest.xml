@@ -30,6 +30,8 @@
     <!--用于申请调用A-GPS模块-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".App"
@@ -75,7 +77,6 @@
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data android:name="com.amap.api.v2.apikey"
             android:value="2d43662fdd704e1eb86175f31876bcb0">
-
         </meta-data>
 
     </application>

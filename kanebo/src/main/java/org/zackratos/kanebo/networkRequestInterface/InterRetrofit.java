@@ -1,6 +1,7 @@
 package org.zackratos.kanebo.networkRequestInterface;
 
 import org.zackratos.kanebo.RetJson;
+import org.zackratos.kanebo.xml.XmlDownData;
 import org.zackratos.kanebo.xml.XmlGetOutPlanHardwareStoreList;
 import org.zackratos.kanebo.xml.XmlLogin;
 
@@ -110,6 +111,11 @@ public interface InterRetrofit {
     @FormUrlEncoded
     @POST("UserLogin")
     Call<XmlLogin> login(@FieldMap Map<String, String> params);
+
+    // 下载数据
+    @FormUrlEncoded
+    @POST("GetDictionaryList")
+    Call<XmlDownData> XmlDownData(@FieldMap Map<String, String> params);
 
     // 获取计划外五金网点数据
     @FormUrlEncoded

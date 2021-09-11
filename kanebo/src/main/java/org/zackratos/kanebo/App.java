@@ -3,13 +3,14 @@ package org.zackratos.kanebo;
 import android.content.IntentFilter;
 import org.greenrobot.greendao.database.Database;
 import org.zackratos.basemode.mvp.BaseApplication;
+import org.zackratos.kanebo.broadcastHandle.BroadCastHandle;
 import org.zackratos.kanebo.greendao.DaoMaster;
 import org.zackratos.kanebo.greendao.DaoSession;
 
 public class App extends BaseApplication {
 
     private DaoSession daoSession;
-    private IntentFilter intentFilter;
+    private BroadCastHandle broadCastHandle = new BroadCastHandle();
 
     @Override
     public void onCreate() {
@@ -21,14 +22,8 @@ public class App extends BaseApplication {
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
         // 注册网络变化监听
-        initNetworChanges();
-    }
+        broadCastHandle.initNetworChanges();
 
-    // 注册网络变化监听
-    public IntentFilter initNetworChanges() {
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        return intentFilter;
     }
 
     // 获取GreenDao数据库存储对象

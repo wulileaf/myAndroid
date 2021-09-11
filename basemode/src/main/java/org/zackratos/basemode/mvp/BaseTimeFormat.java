@@ -7,12 +7,32 @@ import java.util.Date;
 
 
 /**
- * @Date 2017/12/13
  * @author leaf
  * @version 1.0
+ * @Date 2017/12/13
  * @Note 时间格式之间互转
  */
 public class BaseTimeFormat {
+
+    // 获取当前日期yyyy-MM-dd
+    public static String getDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = simpleDateFormat.format(new Date());
+        return date;
+    }
+
+    // 获取当前日期时间yyyy-MM-dd
+    public static String getDateTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateTime = simpleDateFormat.format(new Date());
+        return dateTime;
+    }
+
+    // 获取当前时间戳
+    public static Long getTimeStamp() {
+        return System.currentTimeMillis();
+    }
+
 
     /**
      * String类型转换成Long类型

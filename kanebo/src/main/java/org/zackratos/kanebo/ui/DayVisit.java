@@ -33,6 +33,7 @@ import org.zackratos.kanebo.App;
 import org.zackratos.kanebo.R;
 import org.zackratos.kanebo.adapter.adaDayVisit;
 import org.zackratos.kanebo.bean.B_Act_DayVisit;
+import org.zackratos.kanebo.broadcastHandle.BroadCastHandle;
 import org.zackratos.kanebo.networkRequestInterface.InterRetrofit;
 import org.zackratos.kanebo.request.LeafRequest;
 import org.zackratos.kanebo.tools.IdCode;
@@ -99,7 +100,7 @@ public class DayVisit extends BaseActivity {
 
     // 注册广播自己写方法
     private void initBroadcast() {
-        registerReceiver(netReceiver, ((App) getApplication()).initNetworChanges());// 注册广播
+        registerReceiver(netReceiver, new BroadCastHandle().initNetworChanges());// 注册广播
     }
 
     // 自己写注册
@@ -121,7 +122,7 @@ public class DayVisit extends BaseActivity {
                             // 发送广播
                             if (netTpye == 0){
                                 netTpye = TYPE_MOBILE;
-                                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+//                                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
                             }
                             break;
                         case TYPE_WIFI:
@@ -130,7 +131,11 @@ public class DayVisit extends BaseActivity {
                             // 发送广播
                             if (netTpye == 0){
                                 netTpye = TYPE_WIFI;
-                                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                                try {
+                                    initInterface(tools.getUserLoginMsg(DayVisit.this).getString("userid"), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             break;
                         default:
@@ -186,7 +191,7 @@ public class DayVisit extends BaseActivity {
             public void onLocationChanged(AMapLocation aMapLocation) {
                 lat = aMapLocation.getLatitude();
                 lng = aMapLocation.getLongitude();
-                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+//                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
             }
         });
     }
@@ -220,7 +225,7 @@ public class DayVisit extends BaseActivity {
     }
 
     private void initRadioBroadcast() {
-        registerReceiver(networkChangReceiver, ((App) getApplication()).initNetworChanges());// 注册广播
+        registerReceiver(networkChangReceiver, new BroadCastHandle().initNetworChanges());// 注册广播
     }
 
     // 接口请求

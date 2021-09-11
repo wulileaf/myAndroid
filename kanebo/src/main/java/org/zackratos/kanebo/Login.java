@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,48 +16,41 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zackratos.basemode.mvp.BaseActivity;
 import org.zackratos.basemode.mvp.BaseId;
 import org.zackratos.basemode.mvp.BaseNetworkDetection;
 import org.zackratos.basemode.mvp.BaseSp;
+import org.zackratos.basemode.mvp.BaseTimeFormat;
 import org.zackratos.basemode.mvp.IPresenter;
+import org.zackratos.kanebo.greendao.DaoSession;
+import org.zackratos.kanebo.greendao.Dictionary;
+import org.zackratos.kanebo.greendao.DictionaryDao;
 import org.zackratos.kanebo.networkRequestInterface.InterRetrofit;
 import org.zackratos.kanebo.networkRequestInterface.RequestBase;
 import org.zackratos.kanebo.request.LeafRequest;
+import org.zackratos.kanebo.request.LoginParam;
 import org.zackratos.kanebo.tools.tools;
-import org.zackratos.kanebo.ui.DayVisit;
 import org.zackratos.kanebo.ui.Main;
 import org.zackratos.kanebo.ui.Register;
-import org.zackratos.kanebo.wxapi.WXEntryActivity;
 import org.zackratos.kanebo.xml.Msg;
 import org.zackratos.kanebo.xml.TypeList;
+import org.zackratos.kanebo.xml.XmlDownData;
 import org.zackratos.kanebo.xml.XmlLogin;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import butterknife.OnClick;
 import butterknife.BindView;
-import okhttp3.ResponseBody;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-import static org.zackratos.basemode.mvp.BaseUrl.BASEURL;
-import static org.zackratos.basemode.mvp.BaseUrl.JLBURL;
 import static org.zackratos.basemode.mvp.BaseUrl.OPPLELTURL;
 
 /**
@@ -89,11 +81,12 @@ public class Login extends BaseActivity {
 
     @BindView(R.id.iv_see_password)
     ImageView iv_see_password;// 查看密码
-    private int see = 0;// 对是否查看密码进行的标识 0是隐藏,1是显示 ps:默认是隐藏状态
-    private boolean r_password;
 
     @BindView(R.id.login_relat)
     RelativeLayout login_relat;
+
+    @BindView(R.id.load_name)
+    TextView load_name;
 
     @BindView(R.id.login_line)
     LinearLayout login_line;
@@ -102,22 +95,33 @@ public class Login extends BaseActivity {
     RelativeLayout login_line_bottom;
 
     private InputMethodManager manager;// 获取整个屏幕
-
     private BaseSp baseSp;
     private RequestBase requestBase = new RequestBase();
+    private int iden = 0;
+    private int see = 0;// 对是否查看密码进行的标识 0是隐藏,1是显示 ps:默认是隐藏状态
+    private boolean r_password;
+
+    // 数据库的一个Bean类对应一个Dao
+    Query<Dictionary> dictionaryQuery;// Bean类
+    DictionaryDao dictionaryDao;// Dao类
 
     @Override
     protected void initData() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);// 除去手机状态栏
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);// 除去手机状态栏
+        DaoSession daoSession = ((App) getApplication()).getDaoSession();
+        dictionaryDao = daoSession.getDictionaryDao();
+        dictionaryQuery = dictionaryDao.queryBuilder().orderAsc(DictionaryDao.Properties.Id).build();
         et_account.setCursorVisible(false);
         et_password.setCursorVisible(false);
         et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());//隐藏密码
         baseSp = new BaseSp(this);
-        manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        r_password = baseSp.getBoolean(BaseId.REMEMBER_KEY, false);// 查看密码是否设置了记住的状态
-        String account = baseSp.getString(BaseId.USERCODE, "");// 默认记住上一次登录后的账号
-        et_account.setText(account);
+//        String account = baseSp.getString(BaseId.USERCODE, "");// 默认记住上一次登录后的账号
+        et_account.setText(baseSp.getLoginAccount());
+
 //        checkBox_password.setChecked(r_password);
 //        if (r_password) {
 //            String password = baseSp.getString(BaseId.PASSWORD_KEY, null);
@@ -125,7 +129,21 @@ public class Login extends BaseActivity {
 //        }
 
         touchAnalysis();
-        tools.getBaseSp(Login.this).saveNetWork(getNetWork());// 保存手机当前网络环境
+//        tools.getBaseSp(Login.this).saveNetWork(getNetWork());// 保存手机当前网络环境
+
+        // 获取上一次登录的用户信息
+        iden = tools.getUserLoginIden(Login.this);
+        if (iden == 0) {
+            // 不是当天登录
+            // 1.删除对应的数据库数据
+            // 2.开启登录后下载新数据存入数据库的操作
+            // 3.保存初次登录的用户信息数据
+            // 4.保存初次登录的用户登录信息
+            dictionaryDao.deleteAll();
+        } else if (iden == 1) {
+            // 是当天登录
+        }
+
     }
 
     @Override
@@ -149,116 +167,68 @@ public class Login extends BaseActivity {
     }
 
 
-    /**
-     * 记住密码
-     * ps:测试
-     */
+    // 记住密码
 //    @OnCheckedChanged(R.id.checkBox_password)
 //    public void pass(CompoundButton view, boolean ischanged) {
 //    }
 
-
-    /**
-     * 登录按钮
-     */
+    // 登录按钮
     @OnClick(R.id.btn_login)
     public void login() {
         String account = et_account.getText().toString();
         String password = et_password.getText().toString();
-        // 查看手机的网络环境
+        // 检测手机的网络环境
         Boolean yrn = BaseNetworkDetection.isNetworkAvailable(Login.this);
         if (yrn) {
-//            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
-//                showToast("账号或密码为空");
-//            } else {
-            showorhide(0);
-
-
-            //测试请求成功 2021/6/10
-// 处理接口xml数据
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(OPPLELTURL)
-//                    .addConverterFactory(SimpleXmlConverterFactory.create())// JacksonConverterFactory.create()是json解析;
-//                    .build();
-//            InterRetrofit intera = retrofit.create(InterRetrofit.class);
-//
-//            //测试请求成功 2021/6/10
-            Map<String, String> params = new HashMap<>();
-            params.put("userName", "test301");
-            params.put("pwd", "123456");
-            params.put("imei", "A00000AE42C25A");
-            params.put("appVersion", "android3.8");
-            params.put("appH5Version", "4.39_lt");
-            params.put("deviceType", "android");
-            params.put("freeSpace", "1");
-            params.put("mobileVersion", "HRY-AL00a");
-            params.put("channeltype", "1");
-            params.put("prand", "1");
-            params.put("phoneModel", "1");
-            params.put("operatingSystem", "1");
-            params.put("runmemory", "1");
-            params.put("appid", "1");
-            InterRetrofit interRetrofit = new LeafRequest().getXml(OPPLELTURL);
-            Call<XmlLogin> datajsa = interRetrofit.login(params);
-//
-//            // 异步请求
-            datajsa.enqueue(new Callback<XmlLogin>() {
-                @Override
-                public void onResponse(Call<XmlLogin> call, Response<XmlLogin> response) {
-
-                    // xml解析  测试OK
+            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+                showToast("账号或密码为空");
+            } else {
+                showorhide(0, "");
+                InterRetrofit interRetrofit = new LeafRequest().getXml(OPPLELTURL);
+                Call<XmlLogin> datajsa = interRetrofit.login(LoginParam.getLoginParam(et_account.getText().toString(), et_password.getText().toString(), "A00000AE42C25A", "android", "huawei"));
+                datajsa.enqueue(new Callback<XmlLogin>() {
+                    @Override
+                    public void onResponse(Call<XmlLogin> call, Response<XmlLogin> response) {
+                        // xml解析  测试OK
 //                    Log.i("MessLJ", response.body().username + "");// 测试获取单个字段数据OK
 //                    Log.i("MessLJ", response.body().list + "");// 测试获取组数数据OK
-                    List<TypeList> typeList = response.body().list;
-//                    Log.i("MessLJ", typeList + "-------------");// 测试获取组数数据成功
-                    List<Msg> msgList = typeList.get(0).getList();
-//                    Log.i("MessLJ", typeList.get(0).getList().size() + "-------------");// 测试获取组数数据OK
-                    for (int i = 0; i < msgList.size(); i++) {
-                        Msg msg = msgList.get(i);
-//                        Log.i("MessLJ", msg.msgInfo + "-------------" + msg.msgType);// 测试获取组数数据OK
-                        // 下载数据库保存数据
+                        List<TypeList> typeList = response.body().list;// 这个长度可以根据标签数来计算
+                        List<Msg> msgList = typeList.get(0).getList();
 
+                        if (iden == 0) {
+                            // 下载数据库
+                            downData(msgList, response.body().userid, BaseTimeFormat.getDate());
+                            // 保存用户信息
+                            // 保存登录信息
+                            tools.saveJSONUserIfon(Login.this,
+                                    response.body().userid,
+                                    response.body().username,
+                                    response.body().isba,
+                                    response.body().postname,
+                                    response.body().leadername,
+                                    response.body().empcode,
+                                    response.body().orgname,
+                                    BaseTimeFormat.getDate());
+                            new BaseSp(Login.this).saveLoginDate(BaseTimeFormat.getDate(), 1);
+                            new BaseSp(Login.this).saveLoginAccount(account);// 保存上一次登录人员的账号
+                        }
+                        showorhide(1, "");
+                        if (response.body().success == 1) {
+                            startActivity(new Intent(Login.this, Main.class));
+                        } else if (response.body().success == -3) {
+                            showToast("登录失败：" + response.body().errormsg);
+                        } else {
+                            showToast("登录失败异常");
+                        }
                     }
-//                    showorhide(1);
 
-
-                    // 下载数据库保存数据
-
-
-
-
-
-                    // 保存基本数据：userId,userName,IsBA,PostName,LeaderName,EmpCode,OrgName
-                    // 问题：后期可以考虑保存为对象？？？
-                    tools.getBaseSp(Login.this).saveUserId(response.body().userid);
-                    tools.getBaseSp(Login.this).saveUserName(response.body().username);
-                    tools.getBaseSp(Login.this).saveIsBA(response.body().isba);
-                    tools.getBaseSp(Login.this).savePostName(response.body().postname);
-                    tools.getBaseSp(Login.this).saveLeaderName(response.body().leadername);
-                    tools.getBaseSp(Login.this).saveEmpCode(response.body().empcode);
-                    tools.getBaseSp(Login.this).savePostName(response.body().orgname);
-
-
-//                    Log.i("MessLJ", tools.getBaseSp(Login.this).getUserId() + "-------长度666------" + response.body().userid);
-
-                    if (response.body().success == 1) {
-                        showMidToast("登录成功");
-                        startActivity(new Intent(Login.this, Main.class));
-                        showorhide(1);
-                    } else if (response.body().success == -3) {
-                        showToast("登录失败：" + response.body().errormsg);
-                    } else {
-                        showToast("登录失败异常");
+                    @Override
+                    public void onFailure(Call<XmlLogin> call, Throwable t) {
+                        showorhide(1, "");
+                        showToast("登录失败,请检查网络是否正常" + t);
                     }
-                }
-
-                @Override
-                public void onFailure(Call<XmlLogin> call, Throwable t) {
-                    showorhide(1);
-                    showToast("登录失败,请检查网络是否正常" + t);
-                }
-            });
-//            }
+                });
+            }
         } else {
             showToast("当前手机未连接网络，请开启网络后重试");
         }
@@ -300,7 +270,7 @@ public class Login extends BaseActivity {
 //                            if (statue == 1) {
 //                                showMidToast("登录成功");
 //                                startActivity(new Intent(Login.this, Main.class));
-//                                showorhide(1);
+//                                showorhide(1,");
 //                            } else if (statue == -1) {
 ////                            promptDialog.dismiss();
 //                                showToast("登录异常" + mess);
@@ -313,7 +283,7 @@ public class Login extends BaseActivity {
 //
 //                @Override
 //                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    showorhide(1);
+//                    showorhide(1,");
 //                    showToast("登录失败,请检查网络是否正常" + t);
 //                }
 //            });
@@ -324,21 +294,58 @@ public class Login extends BaseActivity {
 
     }
 
-    /**
-     * 集中点击事件
-     */
+    // 有序更新各个表，如何做到有序更新？
+    public void downData(List<Msg> msgList, String userid, String date) {
+        showorhide(2, msgList.get(0).msgInfo);
+        InterRetrofit interRetrofit = new LeafRequest().getXml(OPPLELTURL);
+        Call<XmlDownData> ajax = interRetrofit.XmlDownData(LoginParam.getDBParam(userid, date));
+        ajax.enqueue(new Callback<XmlDownData>() {
+            @Override
+            public void onResponse(Call<XmlDownData> call, Response<XmlDownData> response) {
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response.body().clientTable);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        Log.i("json", jsonObject.getString("ServerId"));
+                        Dictionary dic = new Dictionary(null, jsonObject.getString("ServerId"), jsonObject.getString("DictId")
+                                , jsonObject.getString("DictType")
+                                , jsonObject.getString("DictClass")
+                                , jsonObject.getString("DictName")
+                                , jsonObject.getString("IsDel")
+                                , jsonObject.getString("Remark")
+                                , jsonObject.getString("IsLock")
+                                , jsonObject.getString("DictValue")
+                                , jsonObject.getString("ClientType")
+                                , jsonObject.getString("FirstLevel")
+                                , jsonObject.getString("INT1"));
+                        dictionaryDao.insert(dic);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<XmlDownData> call, Throwable t) {
+                showorhide(1, "");
+                showToast("登录失败,请检查网络是否正常" + t);
+            }
+        });
+    }
+
+    // 集中点击事件
     @OnClick({R.id.tex_no_password, R.id.tex_register, R.id.weichat, R.id.weibo, R.id.message})
     public void click(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.tex_no_password:// 忘记密码
-//                showToast("点击了忘记密码");
                 startActivity(new Intent(this, Login_Forget_Password.class));
                 break;
             case R.id.tex_register:// 立即注册
                 startActivity(new Intent(this, Register.class));
                 break;
-            case R.id.weichat:// 微信
+            case R.id.weichat:// 微信授权登录
 //                showToast("微信");
                 // 授权测试OK
                 // 开始进行微信授权登录操作
@@ -354,10 +361,10 @@ public class Login extends BaseActivity {
 //                    Toast.makeText(Login.this, "用户未安装微信", Toast.LENGTH_SHORT).show();
 //                }
                 break;
-            case R.id.weibo:// 微博
+            case R.id.weibo:// 微博授权登录
                 showToast("微博");
                 break;
-            case R.id.message:// 短信
+            case R.id.message:// 短信验证登录
                 showToast("短信");
                 break;
             default:
@@ -369,7 +376,7 @@ public class Login extends BaseActivity {
     /**
      * 集中配置显示与隐藏
      */
-    public void showorhide(int code) {
+    public void showorhide(int code, String name) {
         switch (code) {
             case 0:
                 login_relat.setVisibility(View.VISIBLE);
@@ -381,6 +388,12 @@ public class Login extends BaseActivity {
                 login_line.setVisibility(View.VISIBLE);
                 login_line_bottom.setVisibility(View.VISIBLE);
                 break;
+            case 2:
+//                login_relat.setVisibility(View.VISIBLE);
+                load_name.setText("正在" + name);
+                login_line.setVisibility(View.GONE);
+                login_line_bottom.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
@@ -388,7 +401,7 @@ public class Login extends BaseActivity {
     }
 
     /**
-     * 在android中点击EditText的时候会弹出软键盘，这时候如果想隐藏软键盘或者填完内容后点其他的地方直接隐藏软键盘，可以按一下方法处理。
+     * 在android中点击EditText的时候会弹出软键盘，这时候如果想隐藏软键盘或者填完内容后点其他的地方直接隐藏软键盘，可以按一下方法处理
      * 首先获得软键盘Manager
      */
     @Override
@@ -440,19 +453,17 @@ public class Login extends BaseActivity {
     public void seepassword() {
         String password = et_password.getText().toString();
         if (!password.isEmpty()) {
-            if (see == 0) {
-                // 显示密码
+            if (see == 0) {// 显示密码
                 iv_see_password.setImageResource(R.drawable.image_password_bg);
                 et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 see = 1;
-            } else if (see == 1) {
-                // 隐藏密码
+            } else if (see == 1) {// 隐藏密码
                 iv_see_password.setImageResource(R.mipmap.noout);
                 et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 see = 0;
             }
         } else {
-            showMidToast("请先输入密码进行查看");
+            showMidToast("请先输入密码再进行查看");
         }
     }
 

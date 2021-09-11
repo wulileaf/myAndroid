@@ -43,6 +43,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/load_name"
             android:textColor="@color/grey8"
             android:layout_marginTop="15dp"
             android:layout_below="@+id/loadView"
