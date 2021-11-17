@@ -28,20 +28,172 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginRight="35dp"
             android:layout_toRightOf="@+id/xxName"
             android:gravity="right"
-            android:text="这个是参数" />
+            android:text="请选择" />
+
+        <ImageView
+            android:src="@mipmap/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
-<!--  spinnerMode:  "dialog"|"dropdown"|"prompt"-->
+    <RelativeLayout
+        android:background="@drawable/item_bottom_solid_line"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/xxCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="城市" />
+
+        <TextView
+            android:id="@+id/xxCityValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="35dp"
+            android:layout_toRightOf="@+id/xxCity"
+            android:gravity="right"
+            android:text="请选择" />
+
+        <ImageView
+            android:src="@mipmap/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/item_bottom_solid_line"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/storeLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="网点级别" />
+
+        <TextView
+            android:id="@+id/storeLevelValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="35dp"
+            android:layout_toRightOf="@+id/storeLevel"
+            android:gravity="right"
+            android:text="请选择" />
+
+        <ImageView
+            android:src="@mipmap/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/item_bottom_solid_line"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/storeCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="网点编码" />
+
+        <TextView
+            android:id="@+id/storeCodeValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@+id/storeCode"
+            android:gravity="right"
+            android:text="-" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/item_bottom_solid_line"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/storeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="网点名称" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@+id/storeName"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:textSize="14dp"
+            android:hint="请输入"
+            android:background="@null"
+            android:gravity="right"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--  spinnerMode:  "dialog"|"dropdown"|"prompt"-->
     <Spinner
         android:id="@+id/spCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"/>
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,10 +218,6 @@
             android:layout_height="wrap_content"
             android:text="女" />
     </RadioGroup>
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"

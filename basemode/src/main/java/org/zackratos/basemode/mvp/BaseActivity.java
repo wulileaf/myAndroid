@@ -55,7 +55,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         state = savedInstanceState;
-        setContentView(initView());
+        setContentView(initView());// 初始化页面
 
 //        if (isDebug()) {           // 这两行必须写在init之前,否则这些配置在init过程中将无效
 //            ARouter.openLog();     // 打印日志

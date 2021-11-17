@@ -1,38 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.zackratos.kanebo">
+    package="org.zackratos.kanebo"
+    tools:ignore="MissingLeanbackLauncher">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-<!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
-<!--    <uses-permission android:name="android.permission.INTERNET" />-->
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <!--高德地图-地图包、搜索包需要的基础权限-->
-    <!--允许程序打开网络套接字-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--允许程序设置内置sd卡的写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--允许程序获取网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--允许程序访问WiFi网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--允许程序读写手机状态和身份-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 精确定位权限，允许一个程序访问精良位置(如GPS) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
+    <!-- 直接复制 Required 标记的部分  极光-->
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -41,6 +13,8 @@
         android:networkSecurityConfig="@xml/network_policy_details"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
+        android:hardwareAccelerated="true"
         tools:replace="android:name">
         <activity android:name=".Login">
             <intent-filter>
@@ -54,16 +28,117 @@
         <activity android:name=".ui.DayVisit" />
         <activity android:name=".ui.DB" />
         <activity android:name=".ui.LoadDwon" />
-        <activity android:name=".ui.PhotoGraph"/>
-        <activity android:name=".ui.Register"/>
-        <activity android:name=".ui.GaoDeMap"/>
-        <activity android:name=".ui.DayVisitDetails"/>
+        <activity android:name=".ui.PhotoGraph" />
+        <activity android:name=".ui.Register" />
+        <activity android:name=".ui.GaoDeMap" />
+        <activity android:name=".ui.DayVisitDetails" />
+        <activity android:name=".ui.BaiDuMapView" />
+        <activity android:name=".ui.Rotation" />
+        <activity android:name=".ui.SelectPicture"/>
+        <activity android:name=".ui.BluetoothConnect"/>
+        <activity android:name=".ui.ScanCode"/>
+        <activity android:name=".ui.ORC"/>
+        <activity android:name=".ui.Table"/>
+        <activity android:name=".ui.Video"/>
+        <activity android:name=".ui.LoadingFile"/>
+        <activity android:name=".tools.ScanQRCodeActivity"/>
+        <activity android:name=".ui.CustomScanCode"/>
+        <activity android:name=".ui.CustomView"/>
+        <activity android:name=".ui.BaseControl"/>
+        <activity android:name=".ui.TestCusView"/>
+        <activity android:name=".ui.SocketView"/>
+        <activity android:name=".ui.WIFIView"/>
+        <activity android:name=".ui.ImmHeaderView"/>
+
+        <!--高度地图-->
+        <!-- Required SDK 核心功能-->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar"
+            tools:replace="android:exported">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+        </activity>
+
+
+        <!--        个推-->
+        <!--个推SDK的appid 重要！必须补充-->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle"
+            tools:replace="android:exported">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+        </activity>
+
+        <!-- 请根据您当前自定义的 PushService 名称路径进行配置 个推-->
+        <activity
+            android:name="cn.jpush.android.service.JNotifyActivity"
+            android:exported="true"
+            android:taskAffinity="jpush.custom"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.JNotifyActivity" />
+                <category android:name="android.intent.category.DEFAULT" /><!--Required SDK核心功能 since 4.2.2-->
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+        </activity>
+
+        <!--        个推-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2d43662fdd704e1eb86175f31876bcb0"></meta-data>
+
+        <!-- SDK 核心功能-->
+        <!--        <service-->
+        <!--            android:name=".ui.DemoPushService"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="PushService"-->
+        <!--            android:process=":pushservice" />-->
+        <!-- Required SDK 核心功能-->
+        <!--        <service android:name=".ui.DemoIntentService" />-->
+
+
+        <!--        极光-->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="o6Z4dLtcMh7RSuL8g0ce57" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="b08cec5018731087398986c1" />
+
+        <!-- Since JCore2.0.0 Required SDK核心功能-->
+        <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
+        <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
+
 
         <!--        参数依次解释-->
         <!--        android.support.v4.content.FileProvider  androidx替换为androidx.core.content.FileProvider-->
         <!--        一般由你的包名+fileprovider构成，保证唯一性-->
         <!--        禁止跟其他应用交互-->
         <!--        授予文件访问权限-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="6m0PsftLTUpxfhuUCGRpHPsegj1ZMY6u"></meta-data>
+
+        <!-- Required since 3.0.7 -->
+        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
+        <!-- 3.3.0开始所有事件将通过该类回调 -->
+        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="org.zackratos.kanebo.fileprovider"
@@ -74,19 +149,198 @@
                 android:resource="@xml/photo_path" />
         </provider>
 
+        <!-- Required SDK 核心功能-->
+        <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="org.zackratos.kanebo.DataProvider"
+            android:exported="true"
+            tools:replace="android:exported" />
+
+        <!-- since 3.0.9 Required SDK 核心功能-->
+        <provider
+            android:name="cn.jpush.android.service.DownloadProvider"
+            android:authorities="org.zackratos.kanebo.DownloadProvider"
+            android:exported="true" />
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的 JPush 服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，或把 enabled 设置成 false ；App 不会被其他 App 拉起，但会拉起其他的 App。 -->
+        <receiver
+            android:name=".ui.JGMsgService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+        </receiver>
+
+        <!-- since 3.1.0 Required SDK 核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK 核心功能-->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+
+        <!--Required SDK核心功能 since 3.3.0-->
         <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="2d43662fdd704e1eb86175f31876bcb0">
-        </meta-data>
+
+        <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计 APK 分发渠道。-->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的 APK 可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+        <service
+            android:name=".ui.JGService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <!-- Required. AppKey copied from Portal -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!--        百度地图-->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="org.zackratos.kanebo" />
+            </intent-filter>
+        </service>
+
+        <!--    百度地图-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
 
     </application>
 
-<!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
+    <permission
+        android:name="org.zackratos.kanebo.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!--    极光-->
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.INTERNET" />-->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!--高德地图-地图包、搜索包需要的基础权限-->
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于写入缓存数据到扩展存储卡-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- if you want to load images from the internet -->
+    <!--    <uses-permission android:name="android.permission.INTERNET" />-->
+
+    <!-- if you want to load images from a file OR from the internet -->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+
+    <!--    个推权限-->
+    <!-- iBeancon 功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 个推电子围栏功能所需权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+
+
+    <!--极光-->
+    <!-- Required -->
+    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <uses-permission android:name="org.zackratos.kanebo.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 用于开启 debug 版本的应用在 6.0 系统上的层叠窗口权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--极光-->
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+<!--    开启蓝牙权限-->
+    <uses-permission android:name = "android.permission.BLUETOOTH"/>
+    <!--启用应用启动设备发现或者操作蓝牙设备的超级管理员-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+</manifest><!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
     <!--    只有拍照权限-->
     <!--    4.0-8.0都不需要相机权限就可以拍照，然而9.0不行(华为p20真机)-->
-<!--    <uses-feature android:name="android.hardware.camera" />-->
+    <!--    <uses-feature android:name="android.hardware.camera" />-->
 
 
 
 
-</manifest>

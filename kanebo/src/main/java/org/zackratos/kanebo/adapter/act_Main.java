@@ -3,6 +3,7 @@ package org.zackratos.kanebo.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class act_Main extends SuperAdapter<b_act_main> {
             @Override
             public void onClick(View v) {// 这里的onClick是系统提供的接口
                 if (listener != null) {
-                    listener.onClick(layoutPosition);// 这里是onClick方法的实现
+                    listener.onClick(layoutPosition);// 这里是自己写的onClick方法的实现
                 }
             }
         });
@@ -110,7 +111,6 @@ public class act_Main extends SuperAdapter<b_act_main> {
 
     }
 
-
     // 第一步 定义短按接口
     public interface OnItemClickListener {
         void onClick(int position);
@@ -137,6 +137,7 @@ public class act_Main extends SuperAdapter<b_act_main> {
         this.longClickListener = longClickListener;
     }
 
+    // 点击item中的某个控件
     public interface OnRegionClikListener {
         void onClick(int position);
     }

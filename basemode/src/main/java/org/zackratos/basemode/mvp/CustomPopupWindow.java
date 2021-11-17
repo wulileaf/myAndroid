@@ -2,6 +2,7 @@ package org.zackratos.basemode.mvp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,39 +32,23 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class CustomPopupWindow extends PopupWindow {
 
-    private Button btnTakePhoto, btnSelect, btnCancel;
     private View mPopView;
-    //    private OnItemClickListener mListener;
     public RecyclerView recyclerView;
     public PopupwindowList popupwindowList;
 
-    public CustomPopupWindow(Context context) {
+    public CustomPopupWindow(Context context, List<PopupwindowBean> list) {
         super(context);
-        init(context);// 初始化布局
+        init(context, list);// 初始化布局
         setPopupWindow();// 设置窗口的相关属性
-        // 设置点击属性
-//        btnTakePhoto.setOnClickListener(this);
-//        btnSelect.setOnClickListener(this);
-//        btnCancel.setOnClickListener(this);
     }
 
     // 初始化布局
-    private void init(Context context) {
+    private void init(Context context, List<PopupwindowBean> list) {
         LayoutInflater inflater = LayoutInflater.from(context);
+
         //绑定布局
         mPopView = inflater.inflate(R.layout.act_popupwindow_list, null);
         recyclerView = mPopView.findViewById(R.id.rec_List);
-
-        // 如何查询数据
-        // 获取数据
-        List<PopupwindowBean> list = new ArrayList<>();
-        PopupwindowBean bean = new PopupwindowBean();
-        bean.setName("安徽办事处");
-        list.add(bean);
-        PopupwindowBean bean1 = new PopupwindowBean();
-        bean1.setName("北京办事处");
-        list.add(bean1);
-
 
         // list是数据
         // 参数三：布局
@@ -73,47 +58,24 @@ public class CustomPopupWindow extends PopupWindow {
         // new GridLayoutManager(this, 3) 瀑布流
         recyclerView.setLayoutManager(new LinearLayoutManager(context));// RecyclerView需要配置，ListView不需要
         recyclerView.setAdapter(popupwindowList);
-
-//        popupwindowList.setOnItemClickListener(new PopupwindowList.OnItemClickListener() {
-//            @Override
-//            public void onClick(int position, PopupwindowBean popupwindowBean) {
-//                Log.i("bsweizhi", popupwindowBean + "-------66666---------" + position);
-//            }
-//        });
-
-//        recyclerView.setOnClickListener(this);
-
-        // 点击事件如何传递???
-//        recyclerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
-//        btnTakePhoto = (Button) mPopView.findViewById(R.id.id_btn_take_photo);
-//        btnSelect = (Button) mPopView.findViewById(R.id.id_btn_select);
-//        btnCancel = (Button) mPopView.findViewById(R.id.id_btn_cancelo);
     }
 
-    /**
-     * 设置窗口的相关属性
-     */
+    // 设置弹出窗口的相关属性
     @SuppressLint("InlinedApi")
     private void setPopupWindow() {
-        this.setContentView(mPopView);// 设置View
+        this.setContentView(mPopView);// 设置弹出框的View
         this.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);// 设置弹出窗口的宽
         this.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);// 设置弹出窗口的高
         this.setFocusable(true);// 设置弹出窗口
         this.setAnimationStyle(R.style.mypopwindow_anim_style);// 设置动画
-        this.setBackgroundDrawable(new ColorDrawable(0x00000000));// 设置背景透明
-        mPopView.setOnTouchListener(new View.OnTouchListener() {// 如果触摸位置在窗口外面则销毁
+        this.setBackgroundDrawable(new ColorDrawable(0x80808080));// 设置背景透明
+
+        mPopView.setOnTouchListener(new View.OnTouchListener() {// 如果点击位置在窗口外面则销毁
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // TODO Auto-generated method stub
-                int height = mPopView.findViewById(R.id.rec_List).getTop();
-                int y = (int) event.getY();
+                int height = mPopView.findViewById(R.id.con_Rec_List).getTop();// 获取窗口的高度
+                int y = (int) event.getY();// 获取整个页面的高度
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (y < height) {
                         dismiss();
@@ -124,22 +86,4 @@ public class CustomPopupWindow extends PopupWindow {
         });
     }
 
-    /**
-     * 定义一个接口，公布出去 在Activity中操作按钮的单击事件
-     */
-//    public interface OnItemClickListener {
-//        void setOnItemClick(View v);
-//    }
-//
-//    public void setOnItemClickListener(OnItemClickListener listener) {
-//        this.mListener = listener;
-//    }
-//
-//    @Override
-//    public void onClick(View v) {
-//        // TODO Auto-generated method stub
-//        if (mListener != null) {
-//            mListener.setOnItemClick(v);
-//        }
-//    }
 }

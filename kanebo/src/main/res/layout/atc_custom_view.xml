@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wulileaf="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.CustomView">
+
+    <include layout="@layout/titlber"/>
+
+    <org.zackratos.kanebo.tools.DiffuseView
+        android:id="@+id/diffuseView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        wulileaf:diffuse_color="@color/colorAccent"
+        wulileaf:diffuse_coreColor="@color/colorPrimaryDark"
+        wulileaf:diffuse_coreImage="@android:drawable/ic_menu_search"
+        wulileaf:diffuse_coreRadius="100"
+        wulileaf:diffuse_maxWidth="300"
+        wulileaf:diffuse_speed="5"
+        wulileaf:diffuse_width="4" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始扩散"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="停止扩散"/>
+
+</LinearLayout>

@@ -37,3 +37,9 @@ public static java.lang.String TABLENAME;
 #Matisse混淆股则
 -dontwarn com.squareup.picasso.**
 -dontwarn com.bumptech.glide.**
+
+#百度地图混淆规则
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-keep class com.baidu.vi.** {*;}
+-dontwarn com.baidu.**

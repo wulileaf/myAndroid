@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,22 +37,28 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 
-// 拍照基于Matisse框架
+// 选择图片功能基于Matisse框架
 // 图片展示基于Glide
 public class PhotoGraph extends BaseActivity {
 
     final int REQUEST_CODE_CHOOSE = 001;
     // ps：RxPermissions需要配合rxJava使用
     final RxPermissions rxPermissions = new RxPermissions(PhotoGraph.this);
-    private View imgEntryView;
-    private AlertDialog dialog;
-
-
     // 权限组
     private static final String[] permissionsGroup = new String[]{
             Manifest.permission.CAMERA
             , Manifest.permission.WRITE_EXTERNAL_STORAGE
             , Manifest.permission.READ_EXTERNAL_STORAGE};
+    private View imgEntryView;
+    private AlertDialog dialog;
+
+    @BindView(R.id.title_content)
+    TextView titleContent;
+    @BindView(R.id.title_right)
+    TextView titleRight;
+    @BindView(R.id.title_back)
+    ImageView titleBack;
+
     @BindView(R.id.img)
     ImageView img;
     @BindView(R.id.btn_img)
@@ -69,6 +76,7 @@ public class PhotoGraph extends BaseActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             initPermission();
         }
+        initTitle();
 
         // Glide加载网络图片
         Glide.with(this)
@@ -83,8 +91,13 @@ public class PhotoGraph extends BaseActivity {
             }
         });
 
-
     }
+
+    private void initTitle() {
+        titleContent.setText("拍照");
+        titleRight.setVisibility(View.VISIBLE);
+    }
+
 
     @OnClick({R.id.btn_img})
     public void check(View view) {
@@ -98,7 +111,7 @@ public class PhotoGraph extends BaseActivity {
     }
 
     // 单个图片点击放大查看
-    public void showpoto(){
+    public void showpoto() {
         LayoutInflater inflater = LayoutInflater.from(PhotoGraph.this);
         imgEntryView = inflater.inflate(R.layout.photo_show, null);
         dialog = new AlertDialog.Builder(PhotoGraph.this).create();
@@ -131,8 +144,8 @@ public class PhotoGraph extends BaseActivity {
 //                .showSingleMediaType(true)
                 //这两行要连用 是否在选择图片中展示照相 和适配安卓7.0 FileProvider
                 // 使用相机，和 captureStrategy 一起使用
-                .capture(true)// 是否提供拍照功能
-                .captureStrategy(new CaptureStrategy(true, "org.zackratos.kanebo.fileprovider"))// 存储到哪里
+//                .capture(true)// 是否提供拍照功能
+//                .captureStrategy(new CaptureStrategy(true, "org.zackratos.kanebo.fileprovider"))// 存储到哪里
                 //有序选择图片 123456...
                 .countable(true)
                 //最大选择数量为9
@@ -216,5 +229,18 @@ public class PhotoGraph extends BaseActivity {
         return null;
     }
 
+    @OnClick({R.id.title_back, R.id.title_right})
+    public void focusClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_back:
+                finish();
+                break;
+            case R.id.title_right:
+                showToast("点击了提交");
+                break;
+            default:
+                break;
+        }
+    }
 
 }

@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/titlber"/>
+
     <Button
         android:id="@+id/btn_img"
         android:layout_width="400px"
@@ -10,7 +12,7 @@
         android:layout_below="@+id/img"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10px"
-        android:text="拍照" />
+        android:text="选择图片" />
 
     <ImageView
         android:id="@+id/img"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="url">
+        <item>http://dgt.acsalpower.com:8888/Ad/ad_1.png</item>
+        <item>http://dgt.acsalpower.com:8888/Ad/ad_2.png</item>
+        <item>http://dgt.acsalpower.com:8888/Ad/ad_3.png</item>
+        <item>http://dgt.acsalpower.com:8888/Ad/ad_4.png</item>
+        <item>http://dgt.acsalpower.com:8888/Ad/ad_5.png</item>
+    </array>
+
+    // 0 女 1 男 2 未知
+    <string-array name="sex">
+        <item>女</item>
+        <item>男</item>
+        <item>未知</item>
+    </string-array>
+
+    <string-array name="month">
+        <item>本月</item>
+        <item>上月</item>
+    </string-array>
+</resources>

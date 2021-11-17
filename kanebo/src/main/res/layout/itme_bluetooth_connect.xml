@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/eqName"
+            android:gravity="center_vertical"
+            android:text="设备名称："
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/eqName"
+            android:id="@+id/eqNameValue"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/eqAddress"
+            android:gravity="center_vertical"
+            android:text="设备地址："
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/eqAddress"
+            android:id="@+id/eqAddressValue"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

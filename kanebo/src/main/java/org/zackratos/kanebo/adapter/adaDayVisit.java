@@ -2,14 +2,13 @@ package org.zackratos.kanebo.adapter;
 
 import android.content.Context;
 import android.icu.text.DecimalFormat;
-import android.util.Log;
 import android.view.View;
 
 import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.SuperViewHolder;
 import org.zackratos.kanebo.R;
 import org.zackratos.kanebo.bean.B_Act_DayVisit;
-import org.zackratos.kanebo.tools.tools;
+import org.zackratos.kanebo.tools.Tools;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class adaDayVisit extends SuperAdapter<B_Act_DayVisit> {
         holder.setText(R.id.storeaddressvalue, item.getAddress());
 
         if (item.getLat() != 0.00 && item.getLng() != 0.00 && lng != null && lat != null) {
-            Double dou = tools.distance(item.getLng(), item.getLat(), lng, lat);
+            Double dou = Tools.distance(item.getLng(), item.getLat(), lng, lat);
             // new DecimalFormat("0.00").format(dou) 保留两位小数 测试OK
             holder.setText(R.id.kmvalue, String.valueOf(new DecimalFormat("0.00").format(dou)));
         } else {

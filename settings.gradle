@@ -1,1 +1,4 @@
 include ':ui', ':basemode', ':kanebo'
+include ':leaf'
+include ':leaf:h5'
+include ':h5'

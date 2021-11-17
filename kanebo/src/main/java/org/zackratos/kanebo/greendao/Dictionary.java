@@ -4,6 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
+// 这个是T_Sys_Dictionary表
 @Entity(nameInDb = "T_Sys_Dictionary")
 public class Dictionary {
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.zackratos.basemode">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -9,7 +10,8 @@
         android:name=".mvp.BaseApplication"
         android:allowBackup="true"
         android:supportsRtl="true"
-        android:theme="@style/BaseTheme">
+        android:theme="@style/BaseTheme"
+        tools:replace="android:theme">
 
     </application>
 

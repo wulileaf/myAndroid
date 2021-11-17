@@ -2,7 +2,7 @@ package org.zackratos.basemode.mvp;
 
 import android.app.Application;
 import android.content.Context;
-import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+//import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import org.xutils.DbManager;
 import org.xutils.common.util.LogUtil;
 import org.xutils.db.table.TableEntity;
@@ -56,7 +56,7 @@ public class BaseApplication extends Application {
         CrashHandler.getInstance().init(getApplicationContext());
 
         // 初始化二维码扫描界面
-        ZXingLibrary.initDisplayOpinion(this);
+//        ZXingLibrary.initDisplayOpinion(this);
     }
 
     /*** 单例模式 ***/

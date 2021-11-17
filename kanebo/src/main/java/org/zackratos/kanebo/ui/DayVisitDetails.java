@@ -17,6 +17,23 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.lljjcoder.Interface.OnCityItemClickListener;
+import com.lljjcoder.bean.CityBean;
+import com.lljjcoder.bean.DistrictBean;
+import com.lljjcoder.bean.ProvinceBean;
+import com.lljjcoder.citywheel.CityConfig;
+import com.lljjcoder.style.citylist.Toast.ToastUtils;
+import com.lljjcoder.style.citypickerview.CityPickerView;
+import com.xuexiang.citypicker.CityPicker;
+import com.xuexiang.citypicker.adapter.OnLocationListener;
+import com.xuexiang.citypicker.adapter.OnPickListener;
+import com.xuexiang.citypicker.model.City;
+import com.xuexiang.citypicker.model.HotCity;
+import com.xuexiang.citypicker.model.LocateState;
+
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zackratos.basemode.adapter.PopupwindowList;
@@ -24,9 +41,16 @@ import org.zackratos.basemode.bean.PopupwindowBean;
 import org.zackratos.basemode.mvp.BaseActivity;
 import org.zackratos.basemode.mvp.CustomPopupWindow;
 import org.zackratos.basemode.mvp.IPresenter;
+import org.zackratos.kanebo.App;
 import org.zackratos.kanebo.R;
+import org.zackratos.kanebo.greendao.DaoSession;
+import org.zackratos.kanebo.greendao.Dictionary;
+import org.zackratos.kanebo.greendao.DictionaryDao;
+import org.zackratos.kanebo.greendao.TestBean;
+import org.zackratos.kanebo.greendao.TestBeanDao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,8 +65,11 @@ public class DayVisitDetails extends BaseActivity {
     @BindView(R.id.title_back)
     ImageView titleBack;
     @BindView(R.id.xxValue)
-    TextView xxValue;
-
+    TextView xxValue;// 办事处
+    @BindView(R.id.xxCityValue)
+    TextView xxCityValue;// 城市
+    @BindView(R.id.storeLevelValue)
+    TextView storeLevelValue;// 网点级别
 
 
     @BindView(R.id.spCity)
@@ -60,10 +87,13 @@ public class DayVisitDetails extends BaseActivity {
     @BindView(R.id.check_box_gz)
     CheckBox mCheckBoxGZ;
 
-
-
-    private CustomPopupWindow mpop;
+    private CustomPopupWindow mpop, mpopCity;
     private SpinnerAdapter adapter = null;
+    private List<HotCity> mHotCities;
+    //申明对象
+    CityPickerView mPicker = new CityPickerView();
+    Query<Dictionary> dictQuery;// Bean类
+    DictionaryDao dictDao;// Dao类
 
     @Override
     protected int initView() {
@@ -72,10 +102,23 @@ public class DayVisitDetails extends BaseActivity {
 
     @Override
     protected void initData() {
-        Log.i("778899", "============111111");
         initTitle();
         getIntentData();
-        initPopupWindow();
+        //预先加载仿iOS滚轮实现的全部数据
+        mPicker.init(this);
+        DaoSession daoSession = ((App) getApplication()).getDaoSession();
+        dictDao = daoSession.getDictionaryDao();
+        dictQuery = dictDao.queryBuilder().orderDesc(DictionaryDao.Properties.Id).build();
+
+        // 办事处
+        List<PopupwindowBean> list = new ArrayList<>();
+        PopupwindowBean bean = new PopupwindowBean();
+        bean.setName("安徽办事处");
+        list.add(bean);
+        PopupwindowBean bean1 = new PopupwindowBean();
+        bean1.setName("北京办事处");
+        list.add(bean1);
+        initPopupWindow(list);
         xxValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,26 +127,71 @@ public class DayVisitDetails extends BaseActivity {
             }
         });
 
-
-        // 测试Spinner
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("合肥");
-        list.add("铜陵");
-        list.add("芜湖");
-        list.add("马鞍山");
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        city.setAdapter(adapter);
-        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // 城市
+        xxCityValue.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onClick(View view) {
+                //添加默认的配置，不需要自己定义，当然也可以自定义相关熟悉，详细属性请看demo
+                CityConfig cityConfig = new CityConfig.Builder().build();
+                mPicker.setConfig(cityConfig);
+                //监听选择点击事件及返回结果
+                mPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
+                    @Override
+                    public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                        //省份province
+                        //城市city
+                        //地区district
+                        Log.i("city", province + "--" + city + "--" + district);
+                    }
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    @Override
+                    public void onCancel() {
+                        ToastUtils.showLongToast(DayVisitDetails.this, "已取消");
+                    }
+                });
+                //显示
+                mPicker.showCityPicker();
             }
         });
+
+        // 网点级别
+        List<Dictionary> dictionary = queryByName("LT_StoreLevel");
+        List<PopupwindowBean> list1 = new ArrayList<>();
+        for (int i = 0; i < dictionary.size(); i++) {
+            PopupwindowBean popupwindowBean = new PopupwindowBean();
+            popupwindowBean.setName(dictionary.get(i).getDictName());
+            popupwindowBean.setValue(dictionary.get(i).getDictId());
+            list1.add(popupwindowBean);
+        }
+        initSLPopupWindow(list1);
+        storeLevelValue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置PopupWindow中的位置
+                mpopCity.showAtLocation(DayVisitDetails.this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        });
+
+
+        // 测试Spinner
+//        ArrayList<String> list = new ArrayList<String>();
+//        list.add("合肥");
+//        list.add("铜陵");
+//        list.add("芜湖");
+//        list.add("马鞍山");
+//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+//        city.setAdapter(adapter);
+//        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         // 测试OK
         //注意是给RadioGroup绑定监视器
@@ -113,6 +201,17 @@ public class DayVisitDetails extends BaseActivity {
         mCheckBoxBJ.setOnCheckedChangeListener(new checkBoxChangeListenerImpl());
         mCheckBoxGZ.setOnCheckedChangeListener(new checkBoxChangeListenerImpl());
         mCheckBoxSH.setOnCheckedChangeListener(new checkBoxChangeListenerImpl());
+    }
+
+    private List<Dictionary> queryByName(String dictName) {
+        QueryBuilder<Dictionary> builder = dictDao.queryBuilder();
+        Query<Dictionary> query = builder
+                .where(DictionaryDao.Properties.DictType.eq(dictName))
+                .build();
+        List<Dictionary> list = query.list();
+        // 如何打印list?
+        Log.i("DBMsg", new Gson().toJson(list));
+        return list;
     }
 
     // RadioButton
@@ -164,10 +263,9 @@ public class DayVisitDetails extends BaseActivity {
         }
     }
 
-    // 初始化底部弹出框
-    private void initPopupWindow() {
-        mpop = new CustomPopupWindow(DayVisitDetails.this);
-//        mpop.setOnItemClickListener(this);
+    // 办事处
+    private void initPopupWindow(List<PopupwindowBean> list) {
+        mpop = new CustomPopupWindow(DayVisitDetails.this, list);
         mpop.popupwindowList.setOnItemClickListener(new PopupwindowList.OnItemClickListener() {
             @Override
             public void onClick(int position, PopupwindowBean popupwindowBean) {
@@ -178,15 +276,40 @@ public class DayVisitDetails extends BaseActivity {
         });
     }
 
+    // 办事处
+    private void initSLPopupWindow(List<PopupwindowBean> list) {
+        mpopCity = new CustomPopupWindow(DayVisitDetails.this, list);
+        mpopCity.popupwindowList.setOnItemClickListener(new PopupwindowList.OnItemClickListener() {
+            @Override
+            public void onClick(int position, PopupwindowBean popupwindowBean) {
+                showToast("点击了" + position);
+                Log.i("778899", "============" + position);
+                mpopCity.dismiss();
+            }
+        });
+    }
+
+    private void initCityPopupWindow(List<PopupwindowBean> list) {
+        mpopCity = new CustomPopupWindow(DayVisitDetails.this, list);
+//        mpop.setOnItemClickListener(this);
+        mpopCity.popupwindowList.setOnItemClickListener(new PopupwindowList.OnItemClickListener() {
+            @Override
+            public void onClick(int position, PopupwindowBean popupwindowBean) {
+                showToast("点击了" + position);
+                Log.i("778899", "============" + position);
+                mpopCity.dismiss();
+            }
+        });
+    }
+
     private void getIntentData() {
         String intent = getIntent().getStringExtra("StoreMsg");
         try {
             JSONObject jsonObject = new JSONObject(intent);
-//            Log.i("StoreMsg", jsonObject.get("StoreName") + "--------------");
+            Log.i("StoreMsg", jsonObject + "--------------");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -226,4 +349,5 @@ public class DayVisitDetails extends BaseActivity {
 //
 //        }
 //    }
+
 }

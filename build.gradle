@@ -4,16 +4,22 @@ buildscript {
 
     repositories {
         google()
-//        maven { url 'https://maven.google.com' }
+
         maven { url 'https://maven.aliyun.com/repository/public/' }
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url 'https://maven.google.com' }
+        maven { url 'http://developer.huawei.com/repo/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.4'// gradle插件版本配置位置
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.2'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0' // add plugin
+        classpath 'com.google.gms:google-services:4.3.4'// 极光推送
+        // hms
+        classpath 'com.huawei.agconnect:agcp:1.4.1.300'// 极光推送
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,12 +28,18 @@ buildscript {
 
 allprojects {
     repositories {
+
         google()
         jcenter()
-//        maven { url 'https://maven.google.com' }
+        mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url 'https://jitpack.io' }
-
+        maven {
+            url "https://mvn.getui.com/nexus/content/repositories/releases/"
+        }
+        maven {url 'http://developer.huawei.com/repo/'}
+        //fcm
+        maven { url "https://maven.google.com" }
     }
 }
 

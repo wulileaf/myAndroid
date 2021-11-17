@@ -24,8 +24,11 @@ import butterknife.BindView;
 // 主页面
 public class Main extends BaseActivity {
 
-    private String[] shwoTextPage = {"当日拜访", "门店拍照", "计划设定", "导购考勤", "数据库", "个人中心", "下拉刷新", "高德地图"};
-    private int[] shwoImgPage = {R.mipmap.inmd, R.mipmap.jppz, R.mipmap.plan, R.mipmap.bgimg, R.mipmap.database, R.mipmap.my, R.mipmap.dropdown, R.mipmap.map};
+    private String[] shwoTextPage = {"当日拜访", "图片选择", "图片拍照", "基础控件", "数据库", "个人中心", "下拉刷新", "高德地图", "滑轮展示", "百度地图", "扫码展示", "连接蓝牙",
+            "身份识别", "表格展示", "视频展示", "文件下载", "自定义View", "测试View", "wifi", "socket", "沉浸式页面"};
+    private int[] shwoImgPage = {R.mipmap.inmd, R.mipmap.jppz, R.mipmap.plan, R.mipmap.bgimg, R.mipmap.database, R.mipmap.my, R.mipmap.dropdown, R.mipmap.gaodemap,
+            R.mipmap.huadong, R.mipmap.baidumap, R.mipmap.saoma, R.mipmap.lanya, R.mipmap.sfz, R.mipmap.table, R.mipmap.video, R.mipmap.loadingfile, R.mipmap.custom,
+            R.mipmap.test, R.mipmap.wifi, R.mipmap.lianjie, R.mipmap.yemain};
 
     @BindView(R.id.rec_Message)
     RecyclerView rec_Message;
@@ -69,14 +72,14 @@ public class Main extends BaseActivity {
 //                        showMidToast(shwoTextPage[position] + "");
                         startActivity(new Intent(Main.this, DayVisit.class));
                         break;
-                    case 1:// 门店拍照
+                    case 1:// 图片选择
                         startActivity(new Intent(Main.this, PhotoGraph.class));
                         break;
-                    case 2:// 计划设定
-
+                    case 2:// 图片拍摄
+                        startActivity(new Intent(Main.this, SelectPicture.class));
                         break;
-                    case 3:// 导购考勤
-
+                    case 3:// 基础控件
+                        startActivity(new Intent(Main.this, BaseControl.class));
                         break;
                     case 4:// 数据库操作
                         startActivity(new Intent(Main.this, DB.class));
@@ -89,6 +92,45 @@ public class Main extends BaseActivity {
                         break;
                     case 7:// 高德地图
                         startActivity(new Intent(Main.this, GaoDeMap.class));
+                        break;
+                    case 8:// 滑轮展示
+                        startActivity(new Intent(Main.this, Rotation.class));
+                        break;
+                    case 9:// 百度地图
+                        startActivity(new Intent(Main.this, BaiDuMapView.class));
+                        break;
+                    case 10:// 扫码展示
+                        startActivity(new Intent(Main.this, ScanCode.class));
+                        break;
+                    case 11:// 连接蓝牙
+                        startActivity(new Intent(Main.this, BluetoothConnect.class));
+                        break;
+                    case 12:// 身份识别
+                        startActivity(new Intent(Main.this, ORC.class));
+                        break;
+                    case 13:// 表格展示
+                        startActivity(new Intent(Main.this, Table.class));
+                        break;
+                    case 14:// 视频展示
+                        startActivity(new Intent(Main.this, Video.class));
+                        break;
+                    case 15:// 文件下载
+                        startActivity(new Intent(Main.this, LoadingFile.class));
+                        break;
+                    case 16:// 自定义View
+                        startActivity(new Intent(Main.this, CustomView.class));
+                        break;
+                    case 17:// 测试View
+                        startActivity(new Intent(Main.this, TestCusView.class));
+                        break;
+                    case 18:// wifi
+                        startActivity(new Intent(Main.this, WIFIView.class));
+                        break;
+                    case 19:// socket
+                        startActivity(new Intent(Main.this, SocketView.class));
+                        break;
+                    case 20:// 沉浸式页面
+                        startActivity(new Intent(Main.this, ImmHeaderView.class));
                         break;
                     default:
                         break;

@@ -22,7 +22,6 @@ public class PopupwindowList extends SuperAdapter<PopupwindowBean> {
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, PopupwindowBean item) {
         holder.setText(R.id.name, item.getName());
-
         holder.findViewById(R.id.pop_bean).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

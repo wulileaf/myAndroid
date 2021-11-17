@@ -14,11 +14,14 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.zackratos.basemode.mvp.BaseActivity;
 import org.zackratos.basemode.mvp.CustomPopupWindow;
 import org.zackratos.basemode.mvp.IPresenter;
@@ -51,12 +54,12 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
     private String maddress;
     private MapView map;
 
-
     //声明mlocationClient对象
     public AMapLocationClient mlocationClient;
     //声明mLocationOption对象
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocation amapLocation;
+    private LocationSource.OnLocationChangedListener onLocationChangedListener;
 
     @BindView(R.id.title_content)
     TextView title_content;
@@ -88,7 +91,7 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
         }
 
         map = findViewById(R.id.map);
-        mpop = new CustomPopupWindow(GaoDeMap.this);
+        mpop = new CustomPopupWindow(GaoDeMap.this, null);
 //        mpop.setOnItemClickListener(this);
         // 地图初始化
         map.onCreate(savedInstanceState());
@@ -96,30 +99,32 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
             aMap = map.getMap();
         }
 
-
-        // 定位功能
+        // 初始化定位功能
         mlocationClient = new AMapLocationClient(this);// 初始化定位
         mlocationClient.setLocationListener(this);// 设置定位监听
 
         mLocationOption = new AMapLocationClientOption();// 初始化定位参数配置
+        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
         // 设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         // 默认高精度模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        // 单次定位有以下两种方式1，2
+//        mLocationOption.setLocationPurpose()
+        // 单次定位有以下两种方式1,2
         // 获取一次定位结果：
         // 该方法默认为false。
         // 1
-        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocation(false);
         // 获取最近3s内精度最高的一次定位结果：
         // 设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
         // 2
-//        mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setOnceLocationLatest(true);
         // 设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setInterval(2000);
         // 设置定位同时是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
+        mLocationOption.setMockEnable(true);
         // 单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-//        mLocationOption.setHttpTimeOut(20000);
+        mLocationOption.setHttpTimeOut(20000);
         // 给定位客户端对象设置定位参数
         mlocationClient.setLocationOption(mLocationOption);
         // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -127,8 +132,8 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
         // 在定位结束后，在合适的生命周期调用onDestroy()方法
         // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
         //启动定位
+        Log.i("aMap", "启动了定位");
         mlocationClient.startLocation();
-
 //        new AMapLocationListener(){
 //            @Override
 //            public void onLocationChanged(AMapLocation aMapLocation) {
@@ -138,15 +143,12 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
 //        mlocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
 //        mlocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
 
-
-
-
         // 设置定位蓝点
         myLocationStyle = new MyLocationStyle();
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//定位一次，且将视角移动到地图中心点
         // 设置是否显示定位小蓝点，用于满足只想使用定位，不想使用定位小蓝点的场景，设置false以后图面上不再有定位蓝点的概念，但是会持续回调位置信息。
-        myLocationStyle.showMyLocation(false);
+        myLocationStyle.showMyLocation(true);
         // 设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数
 //        myLocationStyle.myLocationIcon();
         // ----------------------------------------------------------------------------------
@@ -158,20 +160,15 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
 //        MyLocationStyle strokeWidth(float width);
         // ----------------------------------------------------------------------------------
 
-
-
         // 实现地图
         aMap.getUiSettings().setCompassEnabled(true);// 指南针
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//显示默认的定位按钮
         aMap.setTrafficEnabled(true);//显示实时交通状况(默认地图)
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
+        aMap.setMinZoomLevel(15);
+        aMap.setMaxZoomLevel(20);
         aMap.setMyLocationStyle(myLocationStyle);
-
-
-
-
-
-
+        Log.i("aMap", "启动了定位1111111111");
 
         aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
@@ -192,7 +189,6 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
                 return true;
             }
         });
-
     }
 
     @Override
@@ -225,7 +221,15 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
     // 定位回调监听
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+//        showToast("定位了");
+        Log.i("aMap", "启动了定位++++++++++" + aMapLocation);
+        Log.i("aMap", "启动了定位城市++++++++++" + aMapLocation.getErrorCode());
         if (amapLocation != null) {
+//            try {
+//                Log.i("aMap", "" + new JSONObject(aMapLocation.toString()));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
@@ -249,6 +253,7 @@ public class GaoDeMap extends BaseActivity implements AMapLocationListener {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);
+//                onLocationChangedListener.onLocationChanged(amapLocation);
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"

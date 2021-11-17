@@ -7,6 +7,7 @@ import org.zackratos.basemode.mvp.BaseActivity;
 import org.zackratos.basemode.mvp.IPresenter;
 import org.zackratos.kanebo.R;
 
+// 蓝牙
 public class BlueTooth extends BaseActivity {
 
     @Override

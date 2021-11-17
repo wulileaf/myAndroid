@@ -29,7 +29,6 @@ import org.zackratos.basemode.mvp.BaseActivity;
 import org.zackratos.basemode.mvp.BaseNetworkDetection;
 import org.zackratos.basemode.mvp.BaseSp;
 import org.zackratos.basemode.mvp.IPresenter;
-import org.zackratos.kanebo.App;
 import org.zackratos.kanebo.R;
 import org.zackratos.kanebo.adapter.adaDayVisit;
 import org.zackratos.kanebo.bean.B_Act_DayVisit;
@@ -37,9 +36,10 @@ import org.zackratos.kanebo.broadcastHandle.BroadCastHandle;
 import org.zackratos.kanebo.networkRequestInterface.InterRetrofit;
 import org.zackratos.kanebo.request.LeafRequest;
 import org.zackratos.kanebo.tools.IdCode;
-import org.zackratos.kanebo.tools.tools;
+import org.zackratos.kanebo.tools.Tools;
 import org.zackratos.kanebo.xml.XmlGetOutPlanHardwareStoreList;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +76,8 @@ public class DayVisit extends BaseActivity {
     public NetworkChangReceiver networkChangReceiver = new NetworkChangReceiver();
     private adaDayVisit actMain;
     private Double lat, lng = null;
+    private String address = null;
+    private Double dlat, dlon = null;
     public AMapLocationClient mlocationClient;// 声明mlocationClient对象
     public AMapLocationClientOption mLocationOption = null;// 声明mLocationOption对象
     private List<B_Act_DayVisit> list;
@@ -120,19 +122,23 @@ public class DayVisit extends BaseActivity {
 //                            netType = networkInfo.getType();
                             // 在网络由无网络到有网络的时候
                             // 发送广播
-                            if (netTpye == 0){
+                            if (netTpye == 0) {
                                 netTpye = TYPE_MOBILE;
-//                                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                                try {
+                                    initInterface(Tools.getUserLoginMsg(DayVisit.this).getString("userid"), Tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             break;
                         case TYPE_WIFI:
                             Toast.makeText(context, "正在使用wifi网络", Toast.LENGTH_SHORT).show();
                             // 在网络由网络到有网络的时候
                             // 发送广播
-                            if (netTpye == 0){
+                            if (netTpye == 0) {
                                 netTpye = TYPE_WIFI;
                                 try {
-                                    initInterface(tools.getUserLoginMsg(DayVisit.this).getString("userid"), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                                    initInterface(Tools.getUserLoginMsg(DayVisit.this).getString("userid"), Tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -191,7 +197,12 @@ public class DayVisit extends BaseActivity {
             public void onLocationChanged(AMapLocation aMapLocation) {
                 lat = aMapLocation.getLatitude();
                 lng = aMapLocation.getLongitude();
-//                initInterface(tools.getBaseSp(DayVisit.this).getUserId(), tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                address = aMapLocation.getAddress();
+                try {
+                    initInterface(Tools.getUserLoginMsg(DayVisit.this).getString("userid"), Tools.getDate(), String.valueOf(IdCode.PAGE_CODE));// 测试成功
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -218,10 +229,63 @@ public class DayVisit extends BaseActivity {
         actMain.setOnRegionClikListener(new adaDayVisit.OnRegionClikListener() {
             @Override
             public void onClick(int position) {
-                // 拉起高德地图/百度地图
+
+                try {
+                    String jsonObject = jsonArray.get(position).toString();
+                    dlat = new JSONObject(jsonObject).getDouble("Lat");
+                    dlon = new JSONObject(jsonObject).getDouble("Lng");
+                    Log.i("GDMAP", jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // 拉起高德地图 OK
+//                Intent intent = null;
+//                try {
+//                    intent = Intent.getIntent("androidamap://route?sourceApplication=softname&slat="
+//                            + lat
+//                            + "&slon="
+//                            + lng
+//                            + "&sname="
+//                            + address
+//                            + "&dlat="
+//                            + dlat
+//                            + "&dlon="
+//                            + dlon
+//                            + "&dname="
+//                            + "" + "&dev=0&m=0&t=1");
+//                } catch (URISyntaxException e) {
+//                    e.printStackTrace();
+//                }
+//                if (isInstallByread("com.autonavi.minimap")) {
+//                    startActivity(intent);
+//                    Toast toast = Toast.makeText(DayVisit.this, "高德地图正在启动", 3000);
+//                    toast.show();
+//                } else {
+//                    Toast toast = Toast.makeText(DayVisit.this, "高德地图没有安装", 3000);
+//                    toast.show();
+//                    Intent i = new Intent();
+//                    i.setData(Uri.parse("http://daohang.amap.com/index.php?id=201&CustomID=C021100013023"));
+//                    i.setAction(Intent.ACTION_VIEW);
+//                    DayVisit.this.startActivity(i);
+//                }
+
+                // 百度地图 OK
+                
 
             }
         });
+    }
+
+    /**
+     * 推断是否安装目标应用
+     *
+     * @param packageName 目标应用安装后的包名
+     * @return 是否已安装目标应用
+     * @author zuolongsnail
+     */
+    private boolean isInstallByread(String packageName) {
+        return new File("/data/data/" + packageName).exists();
     }
 
     private void initRadioBroadcast() {

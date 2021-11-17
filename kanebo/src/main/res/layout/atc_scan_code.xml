@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlber"/>
+
+    <EditText
+        android:id="@+id/edittext_zxing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入需要生成二维码的内容" />
+
+    <Button
+        android:id="@+id/button_zxing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生成二维码" />
+
+    <ImageView
+        android:id="@+id/imageView_zxing"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开启扫一扫(zxing自带扫码界面)" />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/button_native"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开启扫一扫（自定义扫码界面）" />
+
+
+    <TextView
+        android:id="@+id/textview_zxing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫码的结果" />
+
+</LinearLayout>

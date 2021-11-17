@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/basemode/basemode.iml" filepath="$PROJECT_DIR$/basemode/basemode.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kanebo/kanebo.iml" filepath="$PROJECT_DIR$/kanebo/kanebo.iml" />
       <module fileurl="file://$PROJECT_DIR$/myAndroid.iml" filepath="$PROJECT_DIR$/myAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ui/ui.iml" filepath="$PROJECT_DIR$/ui/ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/basemode/myAndroid.basemode.iml" filepath="$PROJECT_DIR$/.idea/modules/basemode/myAndroid.basemode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/h5/myAndroid.h5.iml" filepath="$PROJECT_DIR$/.idea/modules/h5/myAndroid.h5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kanebo/myAndroid.kanebo.iml" filepath="$PROJECT_DIR$/.idea/modules/kanebo/myAndroid.kanebo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/leaf/myAndroid.leaf.iml" filepath="$PROJECT_DIR$/.idea/modules/leaf/myAndroid.leaf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/leaf/h5/myAndroid.leaf.h5.iml" filepath="$PROJECT_DIR$/.idea/modules/leaf/h5/myAndroid.leaf.h5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/myAndroid.ui.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/myAndroid.ui.iml" />
     </modules>
   </component>
 </project>

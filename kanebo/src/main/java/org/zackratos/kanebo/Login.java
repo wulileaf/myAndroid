@@ -2,7 +2,6 @@ package org.zackratos.kanebo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -17,13 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+//import com.igexin.sdk.IUserLoggerInterface;
+
 import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.QueryBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zackratos.basemode.mvp.BaseActivity;
-import org.zackratos.basemode.mvp.BaseId;
 import org.zackratos.basemode.mvp.BaseNetworkDetection;
 import org.zackratos.basemode.mvp.BaseSp;
 import org.zackratos.basemode.mvp.BaseTimeFormat;
@@ -35,7 +34,7 @@ import org.zackratos.kanebo.networkRequestInterface.InterRetrofit;
 import org.zackratos.kanebo.networkRequestInterface.RequestBase;
 import org.zackratos.kanebo.request.LeafRequest;
 import org.zackratos.kanebo.request.LoginParam;
-import org.zackratos.kanebo.tools.tools;
+import org.zackratos.kanebo.tools.Tools;
 import org.zackratos.kanebo.ui.Main;
 import org.zackratos.kanebo.ui.Register;
 import org.zackratos.kanebo.xml.Msg;
@@ -63,44 +62,32 @@ public class Login extends BaseActivity {
 
     @BindView(R.id.et_account)
     EditText et_account;// 登录账号
-
     @BindView(R.id.et_password)
     EditText et_password;// 密码
-
     @BindView(R.id.btn_login)
     Button btn_login;// 登录按钮
-
     @BindView(R.id.tex_no_password)
     TextView tex_no_password;// 忘记密码
-
     @BindView(R.id.tex_register)
     TextView tex_register;// 立即注册
-
-//    @BindView(R.id.checkBox_password)
+    //    @BindView(R.id.checkBox_password)
 //    CheckBox checkBox_password;// 记住密码
-
     @BindView(R.id.iv_see_password)
     ImageView iv_see_password;// 查看密码
-
     @BindView(R.id.login_relat)
     RelativeLayout login_relat;
-
     @BindView(R.id.load_name)
     TextView load_name;
-
     @BindView(R.id.login_line)
     LinearLayout login_line;
-
     @BindView(R.id.login_line_bottom)
     RelativeLayout login_line_bottom;
-
     private InputMethodManager manager;// 获取整个屏幕
     private BaseSp baseSp;
     private RequestBase requestBase = new RequestBase();
     private int iden = 0;
     private int see = 0;// 对是否查看密码进行的标识 0是隐藏,1是显示 ps:默认是隐藏状态
     private boolean r_password;
-
     // 数据库的一个Bean类对应一个Dao
     Query<Dictionary> dictionaryQuery;// Bean类
     DictionaryDao dictionaryDao;// Dao类
@@ -132,7 +119,7 @@ public class Login extends BaseActivity {
 //        tools.getBaseSp(Login.this).saveNetWork(getNetWork());// 保存手机当前网络环境
 
         // 获取上一次登录的用户信息
-        iden = tools.getUserLoginIden(Login.this);
+        iden = Tools.getUserLoginIden(Login.this);
         if (iden == 0) {
             // 不是当天登录
             // 1.删除对应的数据库数据
@@ -143,7 +130,6 @@ public class Login extends BaseActivity {
         } else if (iden == 1) {
             // 是当天登录
         }
-
     }
 
     @Override
@@ -180,55 +166,54 @@ public class Login extends BaseActivity {
         // 检测手机的网络环境
         Boolean yrn = BaseNetworkDetection.isNetworkAvailable(Login.this);
         if (yrn) {
-            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
-                showToast("账号或密码为空");
-            } else {
-                showorhide(0, "");
-                InterRetrofit interRetrofit = new LeafRequest().getXml(OPPLELTURL);
-                Call<XmlLogin> datajsa = interRetrofit.login(LoginParam.getLoginParam(et_account.getText().toString(), et_password.getText().toString(), "A00000AE42C25A", "android", "huawei"));
-                datajsa.enqueue(new Callback<XmlLogin>() {
-                    @Override
-                    public void onResponse(Call<XmlLogin> call, Response<XmlLogin> response) {
-                        // xml解析  测试OK
-//                    Log.i("MessLJ", response.body().username + "");// 测试获取单个字段数据OK
-//                    Log.i("MessLJ", response.body().list + "");// 测试获取组数数据OK
-                        List<TypeList> typeList = response.body().list;// 这个长度可以根据标签数来计算
-                        List<Msg> msgList = typeList.get(0).getList();
-
-                        if (iden == 0) {
-                            // 下载数据库
-                            downData(msgList, response.body().userid, BaseTimeFormat.getDate());
-                            // 保存用户信息
-                            // 保存登录信息
-                            tools.saveJSONUserIfon(Login.this,
-                                    response.body().userid,
-                                    response.body().username,
-                                    response.body().isba,
-                                    response.body().postname,
-                                    response.body().leadername,
-                                    response.body().empcode,
-                                    response.body().orgname,
-                                    BaseTimeFormat.getDate());
-                            new BaseSp(Login.this).saveLoginDate(BaseTimeFormat.getDate(), 1);
-                            new BaseSp(Login.this).saveLoginAccount(account);// 保存上一次登录人员的账号
-                        }
-                        showorhide(1, "");
-                        if (response.body().success == 1) {
-                            startActivity(new Intent(Login.this, Main.class));
-                        } else if (response.body().success == -3) {
-                            showToast("登录失败：" + response.body().errormsg);
-                        } else {
-                            showToast("登录失败异常");
-                        }
+//            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+//                showToast("账号或密码为空");
+//            } else {
+            showorhide(0, "");
+            InterRetrofit interRetrofit = new LeafRequest().getXml(OPPLELTURL);
+            Call<XmlLogin> datajsa = interRetrofit.login(LoginParam.getLoginParam("test301", "123456", "A00000AE42C25A", "android", "huawei"));
+            datajsa.enqueue(new Callback<XmlLogin>() {
+                @Override
+                public void onResponse(Call<XmlLogin> call, Response<XmlLogin> response) {
+                    // xml解析  测试OK
+                    Log.i("MessLJ", response.body().username + "");// 测试获取单个字段数据OK
+                    Log.i("MessLJ", response.body().list + "");// 测试获取组数数据OK
+                    List<TypeList> typeList = response.body().list;// 这个长度可以根据标签数来计算
+                    List<Msg> msgList = typeList.get(0).getList();
+                    if (iden == 0) {
+                        // 下载数据库
+                        downData(msgList, response.body().userid, BaseTimeFormat.getDate());
+                        // 保存用户信息
+                        // 保存登录信息
+                        Tools.saveJSONUserIfon(Login.this,
+                                response.body().userid,
+                                response.body().username,
+                                response.body().isba,
+                                response.body().postname,
+                                response.body().leadername,
+                                response.body().empcode,
+                                response.body().orgname,
+                                BaseTimeFormat.getDate());
+                        new BaseSp(Login.this).saveLoginDate(BaseTimeFormat.getDate(), 1);
+                        new BaseSp(Login.this).saveLoginAccount(account);// 保存上一次登录人员的账号
                     }
-
-                    @Override
-                    public void onFailure(Call<XmlLogin> call, Throwable t) {
-                        showorhide(1, "");
-                        showToast("登录失败,请检查网络是否正常" + t);
+                    showorhide(1, "");
+                    if (response.body().success == 1) {
+                        startActivity(new Intent(Login.this, Main.class));
+                    } else if (response.body().success == -3) {
+                        showToast("登录失败：" + response.body().errormsg);
+                    } else {
+                        showToast("登录失败异常");
                     }
-                });
-            }
+                }
+
+                @Override
+                public void onFailure(Call<XmlLogin> call, Throwable t) {
+                    showorhide(1, "");
+                    showToast("登录失败,请检查网络是否正常" + t);
+                }
+            });
+//            }
         } else {
             showToast("当前手机未连接网络，请开启网络后重试");
         }
@@ -302,13 +287,13 @@ public class Login extends BaseActivity {
         ajax.enqueue(new Callback<XmlDownData>() {
             @Override
             public void onResponse(Call<XmlDownData> call, Response<XmlDownData> response) {
-
                 try {
                     JSONArray jsonArray = new JSONArray(response.body().clientTable);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         Log.i("json", jsonObject.getString("ServerId"));
-                        Dictionary dic = new Dictionary(null, jsonObject.getString("ServerId"), jsonObject.getString("DictId")
+                        Dictionary dic = new Dictionary(null, jsonObject.getString("ServerId")
+                                , jsonObject.getString("DictId")
                                 , jsonObject.getString("DictType")
                                 , jsonObject.getString("DictClass")
                                 , jsonObject.getString("DictName")
@@ -319,7 +304,7 @@ public class Login extends BaseActivity {
                                 , jsonObject.getString("ClientType")
                                 , jsonObject.getString("FirstLevel")
                                 , jsonObject.getString("INT1"));
-                        dictionaryDao.insert(dic);
+                        dictionaryDao.insert(dic);// 插入数据
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -484,5 +469,6 @@ public class Login extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
 }

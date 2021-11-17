@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path
+<!--    注意是external-files-path,不是external-path-->
+<!--    //org.zackratos.kanebo.fileprovider/images/JPEG_20211030_140547_5795822665892211843.jpg-->
+    <external-files-path
         name="images"
         path="Pictures" />
 </paths>

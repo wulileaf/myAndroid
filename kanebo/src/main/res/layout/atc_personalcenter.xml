@@ -1,6 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlber"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="500px">
+
+        <ImageView
+            android:id="@+id/userImg"
+            android:layout_marginLeft="50px"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="180px"
+            android:id="@+id/account"
+            android:text="15156069728"
+            android:layout_marginLeft="50px"
+            android:layout_toRightOf="@+id/userImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_below="@+id/account"
+            android:text="合肥"
+            android:layout_marginLeft="50px"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/userImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/corners_bg"
+        android:layout_marginTop="30px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:layout_width="match_parent"
+        android:layout_height="500px">
+
+
+        <RelativeLayout
+            android:id="@+id/perMsg"
+            android:layout_width="match_parent"
+            android:layout_height="120px">
+            <ImageView
+                android:id="@+id/grxx"
+                android:layout_marginLeft="20px"
+                android:src="@mipmap/grxx"
+                android:layout_centerVertical="true"
+                android:layout_width="40px"
+                android:layout_height="40px"/>
+            <TextView
+                android:layout_toRightOf="@+id/grxx"
+                android:textSize="10dp"
+                android:layout_marginLeft="15px"
+                android:layout_centerVertical="true"
+                android:text="个人信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <ImageView
+                android:src="@mipmap/arrow_right"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:layout_alignParentRight="true"
+                android:layout_width="50px"
+                android:layout_height="50px"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mmChange"
+            android:layout_width="match_parent"
+            android:layout_height="120px">
+            <ImageView
+                android:id="@+id/xgmm"
+                android:layout_marginLeft="20px"
+                android:src="@mipmap/xiugaimima"
+                android:layout_centerVertical="true"
+                android:layout_width="40px"
+                android:layout_height="40px"/>
+            <TextView
+                android:layout_toRightOf="@+id/xgmm"
+                android:textSize="10dp"
+                android:layout_marginLeft="20px"
+                android:layout_centerVertical="true"
+                android:text="修改密码"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <ImageView
+                android:src="@mipmap/arrow_right"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:layout_alignParentRight="true"
+                android:layout_width="50px"
+                android:layout_height="50px"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/gxCheck"
+            android:layout_width="match_parent"
+            android:layout_height="120px">
+            <ImageView
+                android:id="@+id/gxjc"
+                android:layout_marginLeft="20px"
+                android:src="@mipmap/gxjc"
+                android:layout_centerVertical="true"
+                android:layout_width="40px"
+                android:layout_height="40px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20px"
+                android:layout_toRightOf="@+id/gxjc"
+                android:text="更新检查"
+                android:textSize="10dp"></TextView>
+            <ImageView
+                android:src="@mipmap/arrow_right"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:layout_alignParentRight="true"
+                android:layout_width="50px"
+                android:layout_height="50px"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/outLogin"
+            android:layout_width="match_parent"
+            android:layout_height="120px">
+
+            <ImageView
+                android:id="@+id/tcdl"
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20px"
+                android:src="@mipmap/tcdl" />
+            <TextView
+                android:layout_toRightOf="@+id/tcdl"
+                android:textSize="10dp"
+                android:layout_marginLeft="20px"
+                android:layout_centerVertical="true"
+                android:text="退出登录"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <ImageView
+                android:src="@mipmap/arrow_right"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:layout_alignParentRight="true"
+                android:layout_width="50px"
+                android:layout_height="50px"/>
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

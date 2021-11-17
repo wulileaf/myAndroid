@@ -6,6 +6,8 @@ import android.location.Location;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -45,14 +47,12 @@ import butterknife.OnClick;
 // 2
 // Build--Make Project
 
-
+// 数据库
 public class DB extends BaseActivity {
 
     // 一个Bean类对应一个Dao
     Query<TestBean> userQuery;// Bean类
     TestBeanDao userDao;// Dao类
-
-
     @BindView(R.id.charu)
     Button charu;
     @BindView(R.id.shanchu)
@@ -62,6 +62,13 @@ public class DB extends BaseActivity {
     @BindView(R.id.chaxun)
     Button chaxun;
 
+    @BindView(R.id.title_content)
+    TextView titleContent;
+    @BindView(R.id.title_right)
+    TextView titleRight;
+    @BindView(R.id.title_back)
+    ImageView titleBack;
+
     @Override
     protected int initView() {
         return R.layout.atc_database;
@@ -69,6 +76,7 @@ public class DB extends BaseActivity {
 
     @Override
     protected void initData() {
+        initTitle();
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
         userDao = daoSession.getTestBeanDao();// 获取数据库对象
         // 返回实体集合升序排列
@@ -102,7 +110,6 @@ public class DB extends BaseActivity {
 //    mBeanDao.deleteByKeyInTx();删除一组数据(根据id)
     private void deleteUser() {
         userDao.deleteByKey(1l);
-
     }
 
     // 修改数据
@@ -120,7 +127,7 @@ public class DB extends BaseActivity {
 //    UserInfoTable infoTable = tableDao.queryBuilder().
 //            where(UserInfoTableDao.Properties.Id.eq(userId)).unique();
     // 方式2
-//    UserInfoTable infoTable2 =   tableDao.queryBuilder().
+//    UserInfoTable infoTable2 = tableDao.queryBuilder().
 //            where(new WhereCondition.PropertyCondition(UserInfoTableDao.Properties.Id, "=?", userId)).unique();
     private List<TestBean> queryByName(String name, String sex) {
         QueryBuilder<TestBean> builder = userDao.queryBuilder();
@@ -153,13 +160,13 @@ public class DB extends BaseActivity {
             // 如果id等于null，那么插入数据库中的数据的id会自动自己增加
             // 如果根据ID去删除对应表中的数据，其他数据的id并不会发生改变
             case R.id.charu:// 插入（增加） 测试OK
-                TestBean user = new TestBean(null, "leaf", "男", 30, 400000);
+                TestBean user = new TestBean(null, "leaf", "男", 1, 400000);
                 userDao.insert(user);
                 break;
                 // 删除的思路，还可以先查询，在删除
             case R.id.shanchu:// 删除
 //                TestBean testBean = new TestBean();
-//                userDao.delete();
+//                userDao.delete(testBean);
                 userDao.deleteByKey(2l);
 //                queryList();
                 break;
@@ -179,5 +186,23 @@ public class DB extends BaseActivity {
         }
     }
 
+    private void initTitle() {
+        titleContent.setText("数据库");
+        titleRight.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick({R.id.title_back, R.id.title_right})
+    public void focusClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_back:
+                finish();
+                break;
+            case R.id.title_right:
+                showToast("点击了提交");
+                break;
+            default:
+                break;
+        }
+    }
 
 }

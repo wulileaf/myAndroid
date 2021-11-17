@@ -12,6 +12,10 @@ import java.util.List;
 @Root(name = "LoginResult", strict = false)
 public class XmlLogin {
 
+    // 最外层 这个是列表
+    @ElementList(entry = "MsgTypeList", required = false, inline = true)
+    public List<TypeList> list;
+
     @Element(name = "Success", required = false)
     public int success;
 
@@ -39,9 +43,7 @@ public class XmlLogin {
     @Element(name = "OrgName", required = false)
     public String orgname;// 大区
 
-    // 最外层 这个是列表
-    @ElementList(entry = "MsgTypeList", required = false, inline = true)
-    public List<TypeList> list;
+
 
 //    @Element(name = "MsgTypeList", required = false)
 //    public String list;
