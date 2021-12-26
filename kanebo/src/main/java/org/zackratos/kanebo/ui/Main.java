@@ -5,6 +5,7 @@ import android.content.Intent;
 //import android.support.v7.widget.GridLayoutManager;
 //import android.support.v7.widget.LinearLayoutManager;
 //import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.widget.Toast;
 
 import org.zackratos.basemode.mvp.BaseActivity;
@@ -16,8 +17,11 @@ import org.zackratos.kanebo.bean.b_act_main;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 
 
@@ -29,7 +33,6 @@ public class Main extends BaseActivity {
     private int[] shwoImgPage = {R.mipmap.inmd, R.mipmap.jppz, R.mipmap.plan, R.mipmap.bgimg, R.mipmap.database, R.mipmap.my, R.mipmap.dropdown, R.mipmap.gaodemap,
             R.mipmap.huadong, R.mipmap.baidumap, R.mipmap.saoma, R.mipmap.lanya, R.mipmap.sfz, R.mipmap.table, R.mipmap.video, R.mipmap.loadingfile, R.mipmap.custom,
             R.mipmap.test, R.mipmap.wifi, R.mipmap.lianjie, R.mipmap.yemain};
-
     @BindView(R.id.rec_Message)
     RecyclerView rec_Message;
 
@@ -43,6 +46,11 @@ public class Main extends BaseActivity {
         initAdapter();
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+//        getMenuInflater().inflate();
+        return true;
+    }
+
 
     private void initAdapter() {
 
@@ -54,6 +62,9 @@ public class Main extends BaseActivity {
             list.add(bActMain);
         }
         act_Main actMain = new act_Main(this, list, R.layout.item_act_main);
+        // GridLayoutManager网格
+        // LinearLayoutManager
+        // StaggeredGridLayoutManager瀑布流
         rec_Message.setLayoutManager(new GridLayoutManager(this, 3));// RecyclerView需要配置，ListView不需要
         rec_Message.setAdapter(actMain);
 

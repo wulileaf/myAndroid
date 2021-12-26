@@ -30,4 +30,6 @@
     <color name="gaodecolor">#DCE0EB</color>
     <color name="color_dark_grey">#808080</color>
     <color name="progass">#f1f1f1</color>
+
+    <color name="gray">#F8F5F3</color>
 </resources>

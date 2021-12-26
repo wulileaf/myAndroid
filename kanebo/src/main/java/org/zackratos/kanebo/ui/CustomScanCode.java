@@ -21,13 +21,12 @@ public class CustomScanCode extends AppCompatActivity implements DecoratedBarcod
     private DecoratedBarcodeView decoratedBarcodeView;
     private CaptureManager captureManager;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.atc_custom_scan_code);
         decoratedBarcodeView = this.findViewById(R.id.decoratedBarcodeView);
-        //重要代码，初始化捕获
+        // 重要代码，初始化捕获
         captureManager = new CaptureManager(CustomScanCode.this, decoratedBarcodeView);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         captureManager.decode();

@@ -12,7 +12,6 @@ public class Test_One {
 
     // 这里面也具体需要子线程执行的业务
     public void getInfo() {
-
         new Thread(new Runnable() {
             @Override
             public void run() {

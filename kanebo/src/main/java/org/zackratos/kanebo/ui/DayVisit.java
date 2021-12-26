@@ -213,7 +213,7 @@ public class DayVisit extends BaseActivity {
             @Override
             public void onClick(int position) {
                 try {
-                    Log.i("778899", "============11111122222");
+//                    Log.i("778899", "============11111122222");
                     String jsonObject = jsonArray.get(position).toString();
                     Intent intent = new Intent(DayVisit.this, DayVisitDetails.class);
                     intent.putExtra("StoreMsg", jsonObject);
@@ -221,7 +221,6 @@ public class DayVisit extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -271,7 +270,6 @@ public class DayVisit extends BaseActivity {
 //                }
 
                 // 百度地图 OK
-                
 
             }
         });

@@ -85,7 +85,6 @@ public class ORC extends BaseActivity {
         }
     }
 
-
     @Override
     protected IPresenter getPresenter() {
         return null;

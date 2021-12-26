@@ -1,5 +1,6 @@
 package org.zackratos.kanebo.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
@@ -19,6 +20,7 @@ import butterknife.BindView;
 
 public class Rotation extends BaseActivity implements OnBannerListener {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.banner)
     Banner banner;
     List<?> images = new ArrayList<>();
@@ -31,6 +33,7 @@ public class Rotation extends BaseActivity implements OnBannerListener {
 
     @Override
     protected void initData() {
+        initTitleBar();
 //        banner.addBannerLifecycleObserver(this)//添加生命周期观察者
 //                .setAdapter(new BannerExampleAdapter(DataBean.getTestData()))
 //                .setIndicator(new CircleIndicator(this));

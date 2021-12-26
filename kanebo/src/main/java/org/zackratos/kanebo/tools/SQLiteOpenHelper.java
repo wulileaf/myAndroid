@@ -2,6 +2,7 @@ package org.zackratos.kanebo.tools;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 
@@ -26,7 +27,8 @@ public class SQLiteOpenHelper extends DaoMaster.OpenHelper {
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
-
+        Log.e("TAG", "onUpgrade: " + oldVersion);
+        Log.e("TAG", "onUpgrade: " + newVersion);
         MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
             @Override
             public void onCreateAllTables(Database db, boolean ifNotExists) {

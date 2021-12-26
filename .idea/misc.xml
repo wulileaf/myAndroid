@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub-Android/myAndroid/basemode/src/main/res/drawable/item_bottom_solid_line.xml" value="0.17708333333333334" />
         <entry key="..\:/GitHub-Android/myAndroid/basemode/src/main/res/layout/act_popupwindow_list.xml" value="0.22" />
         <entry key="..\:/GitHub-Android/myAndroid/basemode/src/main/res/layout/item_popupwindowbean.xml" value="0.178125" />
         <entry key="..\:/GitHub-Android/myAndroid/basemode/src/main/res/layout/titlber.xml" value="0.25" />
@@ -10,6 +11,7 @@
         <entry key="..\:/GitHub-Android/myAndroid/h5/src/main/res/layout/splash.xml" value="0.13697916666666668" />
         <entry key="..\:/GitHub-Android/myAndroid/h5/src/main/res/layout/view_html.xml" value="0.25" />
         <entry key="..\:/GitHub-Android/myAndroid/h5/src/main/res/xml/appkefu_provider_paths.xml" value="0.20244565217391305" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/drawable/atc_main_text_border.xml" value="0.2" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/drawable/bg_dialog.xml" value="0.21979166666666666" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/drawable/bg_dialog_image.xml" value="0.1421875" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/drawable/bottom_line.xml" value="0.20416666666666666" />
@@ -19,32 +21,39 @@
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/drawable/image_password_bg.xml" value="0.11296296296296296" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/act_dump.xml" value="0.5" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/activity_scan_qrcode.xml" value="0.16822916666666668" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc__zxing.xml" value="0.13854166666666667" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_baidumap.xml" value="0.20364583333333333" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_base_control.xml" value="0.1634963768115942" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_bluetooth_connect.xml" value="0.33" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_custom_dialog.xml" value="0.33" />
-        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_custom_scan_code.xml" value="0.2" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_custom_scan_code.xml" value="0.25" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_custom_view.xml" value="0.1" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_database.xml" value="0.18802083333333333" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_day_visit.xml" value="0.1526268115942029" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_day_visit_details.xml" value="0.33" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_gaodemap.xml" value="0.18568840579710144" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_imm_header.xml" value="0.25" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_load_down.xml" value="0.5" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_loading_file.xml" value="0.25" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_orc.xml" value="0.16197916666666667" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_personalcenter.xml" value="0.33" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_photograph.xml" value="0.1640625" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_rotation.xml" value="0.18" />
-        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_scan_code.xml" value="0.1" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_scan_code.xml" value="0.22" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_selectpicture.xml" value="0.12864583333333332" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_table.xml" value="0.1765625" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_test_cus_view.xml" value="0.25" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_video.xml" value="0.15806159420289856" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_wifi.xml" value="0.1802536231884058" />
-        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_zxing.xml" value="0.15416666666666667" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/atc_zxing.xml" value="0.22" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/item_act_main.xml" value="0.33" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/item_atc_load_dwon.xml" value="0.5" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/itme_bluetooth_connect.xml" value="0.33" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/my_view.xml" value="0.25" />
         <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/photo_show.xml" value="0.1640625" />
+        <entry key="..\:/GitHub-Android/myAndroid/kanebo/src/main/res/layout/xui_layout_popup.xml" value="0.18541666666666667" />
         <entry key="..\:/GitHub-Android/myAndroid/leaf/h5/src/main/res/layout/activity_main.xml" value="0.17527173913043478" />
         <entry key="..\:/GitHub-Android/myAndroid/leaf/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
@@ -101,13 +110,6 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.12" />
-      </ProjectState>
-    </option>
   </component>
   <component name="masterDetails">
     <states>

@@ -1,5 +1,6 @@
 package org.zackratos.kanebo.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -216,6 +217,7 @@ public class DayVisitDetails extends BaseActivity {
 
     // RadioButton
     class MyRadioButtonListener implements RadioGroup.OnCheckedChangeListener {
+        @SuppressLint("NonConstantResourceId")
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             switch (i) {

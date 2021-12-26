@@ -1,5 +1,6 @@
 package org.zackratos.kanebo.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -149,11 +150,12 @@ public class DB extends BaseActivity {
     }
 
 
-    //    save()、insert()、insertOrReplace()的区别：
+//    save()、insert()、insertOrReplace()的区别：
 //    方法	说明
 //    save()	根据主键id判断是更新还是新增
 //    insert()	单纯的保存，什么都没有
 //    insertOrReplace()	有就更新，没有就新增
+    @SuppressLint("NonConstantResourceId")
     @OnClick({R.id.charu, R.id.shanchu, R.id.xiugai, R.id.chaxun})
     public void click(View view) {
         switch (view.getId()) {

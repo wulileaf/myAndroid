@@ -13,6 +13,4 @@ public class BroadCastHandle {
         return intentFilter;
     }
 
-
-
 }

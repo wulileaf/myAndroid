@@ -10,6 +10,7 @@ class BasePresenter {
     public static final String OPPLELTURL = "http://demo1.acsalpower.com:8888/DataWebService.asmx/";// opple流通服务器
 
     ViewInterface viewInterface;
+
     public BasePresenter(ViewInterface viewInterface) {
         this.viewInterface = viewInterface;
     }

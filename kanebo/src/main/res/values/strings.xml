@@ -18,4 +18,15 @@
     <string name="register">注册</string>
     <string name="immediately_register">立即注册</string>
 
+
+    <string name="add">&#xe726;</string>
+    <string name="sure_add">&#xe728;</string>
+    <string name="dp">&#xe735;</string>
+    <string name="sure_dp">&#xe736;</string>
+    <string name="zy">&#xe750;</string>
+    <string name="sure_zy">&#xe751;</string>
+    <string name="sure_gr">&#xe787;</string>
+    <string name="gr">&#xe788;</string>
+    <!--    <string name=""></string>-->
+
 </resources>

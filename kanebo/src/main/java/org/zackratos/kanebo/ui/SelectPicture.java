@@ -143,13 +143,14 @@ public class SelectPicture extends BaseActivity {
         LayoutInflater inflater = LayoutInflater.from(SelectPicture.this);
         imgEntryView = inflater.inflate(R.layout.photo_show, null);
         dialog = new AlertDialog.Builder(SelectPicture.this).create();
-        ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
+        ImageView img = imgEntryView.findViewById(R.id.large_image);
         // Glide加载网络图片
         Glide.with(SelectPicture.this)
                 .load(mImageUri)
                 .into(img);
         dialog.setView(imgEntryView); // 自定义dialog
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow()
+                .setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
 
         // 点击大图关闭dialog

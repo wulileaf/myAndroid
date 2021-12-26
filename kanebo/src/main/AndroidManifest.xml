@@ -8,13 +8,13 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_policy_details"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
-        android:hardwareAccelerated="true"
         tools:replace="android:name">
         <activity android:name=".Login">
             <intent-filter>
@@ -34,21 +34,28 @@
         <activity android:name=".ui.DayVisitDetails" />
         <activity android:name=".ui.BaiDuMapView" />
         <activity android:name=".ui.Rotation" />
-        <activity android:name=".ui.SelectPicture"/>
-        <activity android:name=".ui.BluetoothConnect"/>
-        <activity android:name=".ui.ScanCode"/>
-        <activity android:name=".ui.ORC"/>
-        <activity android:name=".ui.Table"/>
-        <activity android:name=".ui.Video"/>
-        <activity android:name=".ui.LoadingFile"/>
-        <activity android:name=".tools.ScanQRCodeActivity"/>
-        <activity android:name=".ui.CustomScanCode"/>
-        <activity android:name=".ui.CustomView"/>
-        <activity android:name=".ui.BaseControl"/>
-        <activity android:name=".ui.TestCusView"/>
-        <activity android:name=".ui.SocketView"/>
-        <activity android:name=".ui.WIFIView"/>
-        <activity android:name=".ui.ImmHeaderView"/>
+        <activity android:name=".ui.SelectPicture" />
+        <activity android:name=".ui.BluetoothConnect" />
+        <activity android:name=".ui.ScanCode" />
+        <activity android:name=".ui.ORC" />
+        <activity android:name=".ui.Table" />
+        <activity android:name=".ui.Video" />
+        <activity android:name=".ui.LoadingFile" />
+        <activity android:name=".tools.ScanQRCodeActivity" />
+        <activity android:name=".ui.CustomScanCode" />
+        <activity android:name=".ui.CustomView" />
+        <activity android:name=".ui.BaseControl" />
+        <activity android:name=".ui.TestCusView" />
+        <activity android:name=".ui.SocketView" />
+        <activity android:name=".ui.WIFIView" />
+        <activity android:name=".ui.ImmHeaderView"
+            android:theme="@style/TranslucentTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.START"></action>
+                <category android:name="android.intent.category.START"></category>
+                <data android:scheme="http"></data>
+            </intent-filter>
+        </activity>
 
         <!--高度地图-->
         <!-- Required SDK 核心功能-->
@@ -332,10 +339,10 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
-<!--    开启蓝牙权限-->
-    <uses-permission android:name = "android.permission.BLUETOOTH"/>
+    <!--    开启蓝牙权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <!--启用应用启动设备发现或者操作蓝牙设备的超级管理员-->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 </manifest><!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
     <!--    只有拍照权限-->
     <!--    4.0-8.0都不需要相机权限就可以拍照，然而9.0不行(华为p20真机)-->

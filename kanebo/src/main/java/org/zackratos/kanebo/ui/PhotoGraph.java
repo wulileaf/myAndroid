@@ -121,7 +121,7 @@ public class PhotoGraph extends BaseActivity {
                 .load(uri)
                 .into(img);
         dialog.setView(imgEntryView); // 自定义dialog
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);// 设置背景颜色
         dialog.show();
 
         // 点击大图关闭dialog

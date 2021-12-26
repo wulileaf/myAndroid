@@ -12,7 +12,7 @@ public class LoginParam {
         params.put("pwd", password);
         params.put("imei", imei);// "A00000AE42C25A"
         params.put("appVersion", "android3.8");
-        params.put("appH5Version", "4.45_lt");
+        params.put("appH5Version", "4.52_lt");
         params.put("deviceType", platform);
         params.put("freeSpace", "1");
         params.put("mobileVersion", mobileVersion);

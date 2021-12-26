@@ -1,12 +1,14 @@
 package org.zackratos.kanebo.ui;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,10 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 // 下拉刷新
 // 测试RecyclerView里面加载item图片能否根据Glide框架去获取
-public class LoadDwon extends BaseActivity {
+public class LoadDwon extends BaseActivity implements View.OnClickListener {
 
     private String[] name = {"门店1", "门店2",};
     private String[] image = {"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2717159859,8851985&fm=26&gp=0.jpg",
@@ -48,6 +51,12 @@ public class LoadDwon extends BaseActivity {
     RefreshLayout refreshLayout;
     @BindView(R.id.rec_Message)
     RecyclerView rec_Message;
+//    @BindView(R.id.title_content)
+//    TextView titleContent;
+//    @BindView(R.id.title_right)
+//    TextView titleRight;
+//    @BindView(R.id.title_back)
+//    ImageView titleBack;
 
 
     @Override
@@ -57,6 +66,13 @@ public class LoadDwon extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        initTitleBar();
+//        titleContent.setOnClickListener(this);
+//        titleRight.setOnClickListener(this);
+//        titleBack.setOnClickListener(this);
+        tv_titleright.setOnClickListener(this);
+
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));
@@ -137,5 +153,16 @@ public class LoadDwon extends BaseActivity {
     @Override
     protected Intent mainIntent(Context context) {
         return null;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_right:
+                showToast("点击了提交");
+                break;
+            default:
+                break;
+        }
     }
 }
